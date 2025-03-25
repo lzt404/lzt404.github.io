@@ -1,62 +1,377 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的主页</title>
+    <title>lzt404的频道</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
     <style>
+        :root {
+            --header-bg-color: #333;
+            --footer-bg-color: #333;
+            --text-color-light: white;
+            --primary-color: #007BFF;
+            --max-content-width: 1200px;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
+            background-color: var(--header-bg-color);
+            color: var(--text-color-light);
+            padding: 20px 0;
             text-align: center;
+            width: 100%;
+        }
+        .header-content {
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: 0 20px;
         }
         main {
             padding: 20px;
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
         }
         footer {
-            background-color: #333;
-            color: white;
+            background-color: var(--footer-bg-color);
+            color: var(--text-color-light);
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
+            padding: 20px 0;
+            margin-top: 40px;
             width: 100%;
         }
+        .footer-content {
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
         a {
-            color: #007BFF;
+            color: var(--primary-color);
             text-decoration: none;
         }
         a:hover {
             text-decoration: underline;
         }
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        .section {
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 300px;
+            margin: 10px;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .year-header {
+            background-color: #666;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .project-type {
+            font-weight: bold;
+        }
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--header-bg-color);
+            color: var(--text-color-light);
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            background-color: #555;
+        }
+        /* 文章列表样式 */
+        .article-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .article-item {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .article-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        .article-item a {
+            display: block;
+            color: #333;
+            font-weight: 500;
+        }
+        .article-item a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .article-date {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        /* 三栏布局 */
+        .article-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        @media (max-width: 1000px) {
+            .article-columns {
+                flex-direction: column;
+            }
+            .section {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>欢迎来到我的网页</h1>
+        <div class="header-content">
+            <h1></h1>
+            <!-- 可以在这里添加导航菜单 -->
+        </div>
     </header>
+
     <main>
-        <h2>关于我</h2>
-        <p>新博客测试</p>
-        <!-- <p>你可以访问我的 <a href="https://www.example.com" target="_blank">个人博客</a> 了解更多信息。</p> -->
-        <h2>我的兴趣</h2>
-        <ul>
-            <li>编程</li>
-            <li>阅读</li>
-            <li>旅行</li>
-        </ul>
-        <h2>我的照片</h2>
-        <img src="https://pic1.zhimg.com/80/v2-52fdf2fa90ee05f3c6da3dbdb8fa0517_1440w.png" alt="我的照片">
+        <!-- 个人信息部分 -->
+        <div id="about" class="section" style="text-align: center;">
+            <img src="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" alt="个人头像" style="max-width: 200px; border-radius: 20%; margin-bottom: 15px;">
+            <p><strong>大连海事大学，网络工程本科大三在读，电航学社社长</strong></p>
+            <p><strong>我想成为会EE与CS的魔术师</strong></p>
+            <p>邮箱: <a href="mailto:2596933790@qq.com">2596933790@qq.com</a></p>
+            <!-- 新增的社交平台链接和About Me链接 -->
+            <div style="margin-top: 15px;">
+                <!-- <a href="https://github.com/yourusername" target="_blank" style="margin: 0 10px;">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" style="width: 30px; height: 30px;">
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" style="margin: 0 10px;">
+                    <img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" alt="LinkedIn" style="width: 30px; height: 30px;">
+                </a>
+                <a href="https://twitter.com/yourusername" target="_blank" style="margin: 0 10px;">
+                    <img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="Twitter" style="width: 30px; height: 30px;">
+                </a> -->
+                <div style="margin-top: 15px; text-align: center;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 600px; margin: 0 auto;">
+                        <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" rel="noopener noreferrer" 
+                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
+                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
+                            知乎
+                        </a>
+                        <a href="https://github.com/lzt404" target="_blank" rel="noopener noreferrer" 
+                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
+                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
+                            Github
+                        </a>
+                        <a href="http://117.72.120.140/aboutme/" target="_blank" rel="noopener noreferrer" 
+                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
+                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
+                            我的简历
+                        </a>
+                    </div>
+                </div>
+            </div>
+</div>
+        </div>
+
+        <!-- 三栏文章列表 -->
+        <div class="article-columns">
+            <!-- 技术文章列表 -->
+            <div class="section">
+                <h2><a href="./fpga/verilog-language/" target="_blank" style="color: black;">嵌入式相关</a></h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="articles/embedded-system-design.html">详解stm32</a>
+                        <div class="article-date">2024年5月15日</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 学习笔记列表 -->
+            <div class="section">
+                <h2><a href="http://www.github.com/lzt404" target="_blank" style="color: black;">操作系统</a></h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="notes/data-structures.html">rt-thread完全解析</a>
+                        <div class="article-date">2024年6月3日</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="notes/operating-system.html">操作系统核心概念整理</a>
+                        <div class="article-date">2024年5月18日</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FPGA -->
+            <div class="section">
+                <h2><a href="./fpga/verilog-language/" target="_blank" style="color: black;">FPGA</a></h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">verilog语法入门</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 区块链 -->
+            <div class="section">
+                <h2><a href="./fpga/verilog-language/" target="_blank" style="color: black;">区块链</a></h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">区块链技术开发相关资料</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 海思 -->
+            <div class="section">
+                <h2><a href="./fpga/verilog-language/" target="_blank" style="color: black;">华为开发技术</a></h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">hi3861</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">openharmony解析</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">海思soc芯片SDK的详解</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 随记感想 -->
+            <div class="section">
+                <h2>随记感想</h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">春天的花开</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">秋天的风</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">冬天的落阳</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">忧郁的青春</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="projects/smart-campus.html">年少的我</a>
+                        <div class="article-date">2024年6月</div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </main>
+
     <footer>
-        <p>&copy; 2025 我的网页. 保留所有权利。</p>
+        <div class="footer-content">
+            <p>&copy; </p>
+        </div>
     </footer>
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+    <script>
+        // 返回顶部按钮显示/隐藏
+        window.onscroll = function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        };
+        
+        // 统一的配置对象，方便修改header和footer内容
+        const siteConfig = {
+            header: {
+                title: "明月清风来相照-欢迎来到我的频道",
+                navLinks: [
+                    // 可以在这里添加导航链接
+                ]
+            },
+            footer: {
+                copyright: "&copy; 2025 你好。",
+                links: [
+                    // 可以在这里添加页脚链接
+                ]
+            }
+        };
+        
+        // 初始化页面内容
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置header内容
+            document.querySelector('header h1').textContent = siteConfig.header.title;
+            
+            // 设置footer内容
+            document.querySelector('footer p').innerHTML = siteConfig.footer.copyright;
+        });
+    </script>
 </body>
 </html>

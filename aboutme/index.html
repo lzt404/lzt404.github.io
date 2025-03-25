@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lzt404的简历</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <style>
+        :root {
+            --header-bg-color: #333;
+            --footer-bg-color: #333;
+            --text-color-light: white;
+            --primary-color: #007BFF;
+            --table-header-bg: #333;
+            --year-header-bg: #666;
+            --hover-color: #555;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: var(--header-bg-color);
+            color: var(--text-color-light);
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        footer {
+            background-color: var(--footer-bg-color);
+            color: var(--text-color-light);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            width: 100%;
+        }
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--text-color-light);
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .year-header {
+            background-color: var(--year-header-bg);
+            color: var(--text-color-light);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .project-type {
+            font-weight: bold;
+        }
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--header-bg-color);
+            color: var(--text-color-light);
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 99;
+        }
+        .back-to-top:hover {
+            background-color: var(--hover-color);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            main {
+                padding: 15px;
+            }
+            table {
+                font-size: 0.9em;
+            }
+            th, td {
+                padding: 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header, footer {
+                padding: 15px 0;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="page-header">
+        <h1>你好,我叫梁展通</h1>
+    </header>
+    <main id="main-content">
+        <!-- 个人信息部分 -->
+        <div id="about" class="section" style="text-align: center;">
+            <img src="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" alt="个人头像" style="max-width: 200px; border-radius: 20%; margin-bottom: 15px;">
+            <p><strong>大连海事大学，网络工程本科大三在读，电航学社社长</strong></p>
+            <p><strong>我想成为会EE与CS的魔术师</strong></p>
+            <p>邮箱: <a href="mailto:2596933790@qq.com">2596933790@qq.com</a></p>
+        </div>
+
+        <!-- 教育经历部分 -->
+        <div id="education" class="section">
+            <h2>教育经历</h2>
+            <p><strong>本科:</strong></p>
+            <div class="indent">
+                <p>2022-2023 大连海事大学，航海学院，航海技术专业</p>
+                <p>2023-至今 大连海事大学，信息科学技术学院，网络工程专业</p>
+            </div>
+            <p><strong>高中：</strong></p>
+            <div class="indent">
+                <p>浔州高级中学，电教组机房，奥林匹克信息学竞赛二等奖，掌握常用传统算法与数据结构</p>
+            </div>
+        </div>
+
+        <!-- 兴趣方向部分 -->
+        <div id="interests" class="section">
+            <h2>兴趣方向</h2>
+            <ul>
+                <li><strong>嵌入式系统开发</strong>，<strong>操作系统</strong>，<strong>数字IC</strong>，<strong>智能机器人</strong>，<strong>FPGA</strong>，<strong>计算机网络</strong></li>
+                <li>研究内容：在ARM和RISC-V低功耗平台进行嵌入式微机编程，U-BOOT、Linux内核、根文件系统的移植，并在MCU、SOC平台进行自动化项目开发，以及基于RISC-V架构的处理器的设计。</li>
+                <li>未来想从事<strong>芯片设计</strong>、计算机体系结构、软硬协同开发、AI计算加速相关事业。</li>
+            </ul>
+        </div>
+
+        <!-- 项目部分 -->
+        <div id="projects" class="section">
+            <h2>项目经历</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="15%" style="white-space: nowrap;">年份</th>
+                        <th width="25%">项目类型</th>
+                        <th width="25%">项目名称</th>
+                        <th width="5%" style="white-space: nowrap;">经费</th>
+                        <th width="10%" style="white-space: nowrap;">开源链接</th>
+                        <th width="25%" style="white-space: nowrap;">时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 2024年项目 -->
+                    <tr class="year-header">
+                        <td colspan="6">2024年项目</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2024</td>
+                        <td class="project-type">国家级重点领域大创项目</td>
+                        <td>跨平台万物互联操作系统</td>
+                        <td>15k</td>
+                        <td>暂无</td>
+                        <td>2023.12-2024.10</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2024</td>
+                        <td class="project-type">竞赛项目</td>
+                        <td>水下智慧伴游协作机器人</td>
+                        <td>40k</td>
+                        <td>暂无</td>
+                        <td>2024.01-2024.08</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2024</td>
+                        <td class="project-type">兴趣项目</td>
+                        <td>MCU轻量化网络协议栈</td>
+                        <td>0k</td>
+                        <td>暂无</td>
+                        <td>2024.01-2024.08</td>
+                    </tr>
+                    
+                    <!-- 2023年项目 -->
+                    <tr class="year-header">
+                        <td colspan="6">2023年项目</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2023</td>
+                        <td class="project-type">国家级大创项目</td>
+                        <td>多功能水下作业机器人</td>
+                        <td>8k</td>
+                        <td>暂无</td>
+                        <td>2022.12-2023.12</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2023</td>
+                        <td class="project-type">竞赛项目</td>
+                        <td>一站式物联网办公终端</td>
+                        <td>5k</td>
+                        <td>暂无</td>
+                        <td>2023.04-2023.09</td>
+                    </tr>
+                    <tr>
+                        <td style="white-space: nowrap;">2023</td>
+                        <td class="project-type">竞赛项目</td>
+                        <td>毫米波雷达家电系统</td>
+                        <td>2k</td>
+                        <td>暂无</td>
+                        <td>2023.05-2023.07</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 奖项荣誉部分 -->
+        <div id="awards" class="section">
+            <h2>奖项荣誉</h2>
+            <table>
+                <tr>
+                    <th>比赛名称</th>
+                    <th>获奖级别</th>
+                    <th>主办方</th>
+                    <th>获奖时间</th>
+                </tr>
+                <tr>
+                    <td>辽宁省创新创业年会</td>
+                    <td><strong>最佳创意项目</strong></td>
+                    <td>辽宁省教育厅</td>
+                    <td>2024.9</td>
+                </tr>
+                <tr>
+                    <td>辽宁省创新创业年会</td>
+                    <td><strong>特等奖</strong></td>
+                    <td>辽宁省教育厅</td>
+                    <td>2024.9</td>
+                </tr>
+                <tr>
+                    <td>全国大学生物联网设计竞赛</td>
+                    <td><strong>中国移动最具创新奖</strong></td>
+                    <td>教育部高等学校计算机类专业教学指导委员会</td>
+                    <td>2023.8.25</td>
+                </tr>
+                <tr>
+                    <td>全国大学生物联网设计竞赛中国移动赛道</td>
+                    <td><strong>国家级一等奖</strong></td>
+                    <td>教育部高等学校计算机类专业教学指导委员会</td>
+                    <td>2023.8.25</td>
+                </tr>
+                <tr>
+                    <td>中国国际海洋水下机器人AUV赛道</td>
+                    <td><strong>国家级一等奖</strong></td>
+                    <td>中国海洋发展基金会</td>
+                    <td>2024.7.28</td>
+                </tr>
+                <tr>
+                    <td>中国机器人及人工智能四足机器人</td>
+                    <td><strong>国家级一等奖</strong></td>
+                    <td>中国人工智能学会</td>
+                    <td>2024.8.30</td>
+                </tr>
+                <tr>
+                    <td>中国机器人及人工智能机器人智能家电</td>
+                    <td><strong>国家级一等奖</strong></td>
+                    <td>中国人工智能学会</td>
+                    <td>2024.8.30</td>
+                </tr>
+                <tr>
+                    <td>全国海洋航行器设计与制作大赛</td>
+                    <td><strong>国家级一等奖</strong></td>
+                    <td>中国造船工程学会</td>
+                    <td>2024.7.28</td>
+                </tr>
+                <tr>
+                    <td>全球校园人工智能算法精英大赛</td>
+                    <td>国家级二等奖</td>
+                    <td>江苏省人工智能学会</td>
+                    <td>2023.12.15</td>
+                </tr>
+                <tr>
+                    <td>中国机器人及人工智能机器人创新赛</td>
+                    <td>国家级二等奖</td>
+                    <td>中国人工智能学会</td>
+                    <td>2024.8.29</td>
+                </tr>
+                <tr>
+                    <td>全国大学生嵌入式芯片与系统设计竞赛</td>
+                    <td>国家级二等奖</td>
+                    <td>中国电子学会</td>
+                    <td>2023.8.17</td>
+                </tr>
+                <tr>
+                    <td>全国大学生数字媒体科技作品及创意竞赛</td>
+                    <td>国家级二等奖</td>
+                    <td>中国人工智能学会</td>
+                    <td>2023.11.20</td>
+                </tr>
+                <tr>
+                    <td>全国大学生嵌入式芯片与系统设计竞赛</td>
+                    <td>国家级二等奖</td>
+                    <td>中国电子学会</td>
+                    <td>2024.8.15</td>
+                </tr>
+                <tr>
+                    <td>全国大学新一代通信技术大赛(大唐杯)</td>
+                    <td>辽宁省一等奖</td>
+                    <td>工业和信息化部人才交流中心</td>
+                    <td>2023.5.16</td>
+                </tr>
+            </table>
+        </div>
+    </main>
+    <footer id="page-footer">
+        <p>&copy; <span id="current-year">2025</span> lzt. 保留所有权利。</p>
+    </footer>
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+    <script>
+        // 返回顶部按钮显示/隐藏
+        window.onscroll = function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        };
+        
+        // 自动更新年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 统一的配置对象，方便修改header和footer内容
+        const pageConfig = {
+            header: {
+                title: "我祈祷拥有一颗透明的心灵和会流泪的眼睛",
+                // 可以添加更多header配置
+            },
+            footer: {
+                copyright: "&copy; " + new Date().getFullYear() + " lzt404. 保留所有权利。",
+                // 可以添加更多footer配置
+            },
+            // 可以添加更多全局配置
+        };
+        
+        // 应用配置
+        document.getElementById('page-header').querySelector('h1').textContent = pageConfig.header.title;
+        document.getElementById('page-footer').innerHTML = pageConfig.footer.copyright;
+    </script>
+</body>
+</html>
