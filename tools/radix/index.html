@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>进制转换工具（顺序显示 rs1 → rs2 → rd）</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        .bit-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .bit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            min-width: 30px;
+        }
+        .bit-value {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .bit-index {
+            font-size: 10px;
+            color: #666;
+        }
+        .section {
+            margin-bottom: 20px; /* 增加段间距 */
+            padding: 5px; /* 减少内边距 */
+        }
+        .result-section {
+            margin-top: 10px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .input-group .field {
+            flex: 1;
+            min-width: 150px;
+        }
+        .title.is-5 {
+            margin-bottom: 5px; /* 减少标题间距 */
+        }
+    </style>
+    <script>
+        function convert() {
+            const number = document.getElementById("number").value;
+            const fromBase = parseInt(document.getElementById("fromBase").value);
+            const toBase = parseInt(document.getElementById("toBase").value);
+            const padding = parseInt(document.getElementById("padding").value);
+
+            // 转换为十进制
+            const decimal = parseInt(number, fromBase);
+            let result;
+
+            // 根据目标进制转换
+            if (toBase === 2) result = decimal.toString(2);
+            else if (toBase === 8) result = decimal.toString(8);
+            else if (toBase === 16) result = decimal.toString(16);
+            else result = decimal.toString();
+
+            // 补充前导零
+            if (padding > 0) {
+                result = result.padStart(padding, '0');
+            }
+
+            // 显示完整结果
+            document.getElementById("result").innerText = result;
+
+            // 显示完整结果的每一位位数
+            displayFullResultBits(result);
+
+            // 显示分段结果（按顺序 rs1 → rs2 → rd）
+            displaySection(result, 15, 19, "section1", "rs1");
+            displaySection(result, 20, 24, "section2", "rs2");
+            displaySection(result, 7, 11, "section3", "rd");
+        }
+
+        function displayFullResultBits(binaryString) {
+            const fullBitContainer = document.getElementById("fullBitContainer");
+            fullBitContainer.innerHTML = "<h3 class='title is-5'>完整结果的每一位:</h3>";
+
+            // 创建容器
+            const bitContainer = document.createElement("div");
+            bitContainer.className = "bit-container";
+
+            // 遍历每一位
+            for (let i = 0; i < binaryString.length; i++) {
+                const bitDiv = document.createElement("div");
+                bitDiv.className = "bit";
+
+                const bitValue = document.createElement("div");
+                bitValue.className = "bit-value";
+                bitValue.innerText = binaryString[i];
+
+                const bitIndex = document.createElement("div");
+                bitIndex.className = "bit-index";
+                bitIndex.innerText = `位 ${binaryString.length - i - 1}`;
+
+                bitDiv.appendChild(bitValue);
+                bitDiv.appendChild(bitIndex);
+                bitContainer.appendChild(bitDiv);
+            }
+
+            fullBitContainer.appendChild(bitContainer);
+        }
+
+        function displaySection(binaryString, startBit, endBit, sectionId, prefix) {
+            const section = document.getElementById(sectionId);
+            section.innerHTML = `<h3 class='title is-5'>${prefix} (位 ${startBit} 到 位 ${endBit}):</h3>`;
+
+            // 提取指定位范围的二进制值
+            const binarySegment = binaryString.slice(-endBit - 1, binaryString.length - startBit);
+            const decimalValue = parseInt(binarySegment, 2);
+
+            // 显示二进制值
+            const binaryDiv = document.createElement("div");
+            binaryDiv.innerHTML = `<strong>二进制:</strong> ${binarySegment}`;
+            section.appendChild(binaryDiv);
+
+            // 显示十进制值
+            const decimalDiv = document.createElement("div");
+            decimalDiv.innerHTML = `<strong>十进制:</strong> ${decimalValue}`;
+            section.appendChild(decimalDiv);
+
+            // 显示每一位的位数和值
+            const bitContainer = document.createElement("div");
+            bitContainer.className = "bit-container";
+            for (let i = 0; i < binarySegment.length; i++) {
+                const bitDiv = document.createElement("div");
+                bitDiv.className = "bit";
+
+                const bitValue = document.createElement("div");
+                bitValue.className = "bit-value";
+                bitValue.innerText = binarySegment[i];
+
+                const bitIndex = document.createElement("div");
+                bitIndex.className = "bit-index";
+                bitIndex.innerText = `位 ${endBit - i}`;
+
+                bitDiv.appendChild(bitValue);
+                bitDiv.appendChild(bitIndex);
+                bitContainer.appendChild(bitDiv);
+            }
+            section.appendChild(bitContainer);
+        }
+    </script>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-4">进制转换工具（顺序显示 rs1 → rs2 → rd）</h1>
+            
+            <div class="box">
+                <div class="input-group">
+                    <div class="field">
+                        <label class="label">输入数字:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="number" placeholder="数字">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">输入进制:</label>
+                        <div class="control">
+                            <input class="input" type="number" id="fromBase" placeholder="如 2、8、10、16">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">目标进制:</label>
+                        <div class="control">
+                            <input class="input" type="number" id="toBase" placeholder="如 2、8、10、16">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">补充前导零到位数:</label>
+                        <div class="control">
+                            <input class="input" type="number" id="padding" placeholder="如 24">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary is-fullwidth" onclick="convert()">转换</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h2 class="title is-5">完整结果: <span id="result"></span></h2>
+                <div id="fullBitContainer" class="section"></div>
+
+                <!-- 分段显示区域（按顺序 rs1 → rs2 → rd） -->
+                <div id="section1" class="section"></div>
+                <div id="section2" class="section"></div>
+                <div id="section3" class="section"></div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
