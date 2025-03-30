@@ -297,6 +297,35 @@
           transition: background-color 0.3s;
       }
       
+      /* Markdown 代码高亮相关样式 */
+    .markdown-body .hljs {
+      padding: 1em;
+      border-radius: 6px;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .markdown-body .inline-code {
+      padding: 0.2em 0.4em;
+      margin: 0;
+      font-size: 85%;
+      border-radius: 3px;
+    }
+
+    .markdown-body .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 1em;
+    }
+
+    .dark-mode .markdown-body .hljs {
+      background: #1a1a1a;
+    }
+
+    .dark-mode .markdown-body .inline-code {
+      background: rgba(240,246,252,0.15);
+      color: #e6edf3;
+    }
+      
       /* 移动设备样式 */
       @media (max-width: 768px) {
           .main-container {
@@ -391,7 +420,117 @@
   
   <!-- 引入marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css">
+  <!-- 添加 highlight.js 支持 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <!-- 添加更多语言支持 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/verilog.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
+
+  <style>
+    /* 深色模式下的 Markdown 样式 */
+    .dark-mode .markdown-body {
+      color-scheme: dark;
+      background-color: #0d1117;
+      color: #c9d1d9;
+    }
+
+    /* 添加深色模式滚动条样式 */
+    .dark-mode *::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    .dark-mode *::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+
+    .dark-mode *::-webkit-scrollbar-thumb {
+      background-color: #333;
+      border-radius: 6px;
+      border: 3px solid #1a1a1a;
+    }
+
+    .dark-mode *::-webkit-scrollbar-thumb:hover {
+      background-color: #444;
+    }
+
+    .dark-mode .markdown-body pre {
+      background-color: #161b22;
+    }
+
+    .dark-mode .markdown-body code {
+      background-color: rgba(240,246,252,0.15);
+      color: #c9d1d9;
+    }
+
+    .dark-mode .markdown-body img {
+      background-color: #0d1117;
+    }
+
+    .dark-mode .markdown-body h1,
+    .dark-mode .markdown-body h2,
+    .dark-mode .markdown-body h3,
+    .dark-mode .markdown-body h4,
+    .dark-mode .markdown-body h5,
+    .dark-mode .markdown-body h6 {
+      color: #c9d1d9;
+      border-bottom-color: #21262d;
+    }
+
+    .dark-mode .markdown-body a {
+      color: #58a6ff;
+    }
+
+    .dark-mode .markdown-body hr {
+      background-color: #30363d;
+    }
+
+    .dark-mode .markdown-body blockquote {
+      color: #8b949e;
+      border-left-color: #3b434b;
+    }
+
+    .dark-mode .markdown-body table th,
+    .dark-mode .markdown-body table td {
+      border-color: #30363d;
+    }
+
+    .dark-mode .markdown-body table tr {
+      background-color: #0d1117;
+      border-top-color: #30363d;
+    }
+
+    .dark-mode .markdown-body table tr:nth-child(2n) {
+      background-color: #161b22;
+    }
+
+    /* 代码高亮相关样式优化 */
+    .markdown-body pre {
+      position: relative;
+      margin: 1em 0;
+    }
+
+    .markdown-body pre > code {
+      display: block;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.45;
+      background-color: var(--code-bg);
+      border-radius: 6px;
+    }
+
+    .hljs {
+      background: transparent !important;
+      padding: 0 !important;
+    }
+
+    .dark-mode .markdown-body pre > code {
+      background-color: #161b22;
+    }
+  </style>
 </head>
 
 <body>
@@ -491,7 +630,6 @@
         const id = `heading-${index}`;
         heading.id = id;
         
-        // 添加缩进
         if (level > lastLevel) {
           tocHTML += '<ul>';
         } else if (level < lastLevel) {
@@ -512,11 +650,33 @@
         if (!response.ok) throw new Error(`加载失败: ${response.status}`);
         const markdown = await response.text();
         
+        // 配置 marked
+        marked.setOptions({
+          highlight: function(code, language) {
+            const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+            return hljs.highlight(code, { 
+              language: validLanguage,
+              ignoreIllegals: true 
+            }).value;
+          },
+          langPrefix: 'hljs language-',
+          pedantic: false,
+          gfm: true,
+          breaks: false,
+          sanitize: false,
+          smartypants: true
+        });
+        
         // 渲染Markdown
         document.getElementById('content').innerHTML = marked.parse(markdown);
         
         // 生成目录
         generateTOC();
+        
+        // 强制对所有代码块应用高亮
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightElement(block);
+        });
         
       } catch (error) {
         console.error('加载Markdown出错:', error);
