@@ -1,705 +1,155 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>verilog语法入门</title>
-  <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
-  <style>
-      :root {
-          --header-bg-color: #333;
-          --footer-bg-color: #333;
-          --text-color-light: white;
-          --primary-color: #007BFF;
-          --max-content-width: 1200px;
-          --sidebar-width: 250px;
-          
-          /* 新增主题相关变量 */
-          --bg-color: #f0f0f0;
-          --text-color: #333;
-          --content-bg-color: white;
-          --sidebar-bg-color: #27292b;
-          --sidebar-text-color: #bdc3c7;
-          --sidebar-hover-color: white;
-          --table-header-bg: #333;
-          --table-even-row: #f2f2f2;
-          --article-bg: #f8f9fa;
-          --article-hover-bg: #e9ecef;
-          --code-bg: #f6f8fa;
-          --inline-code-bg: rgba(27,31,35,0.05);
-      }
-      
-      /* 深色主题变量 */
-      .dark-mode {
-          --bg-color: #121212;
-          --text-color: #e0e0e0;
-          --content-bg-color: #1e1e1e;
-          --sidebar-bg-color: #1a1a1a;
-          --sidebar-text-color: #a0a0a0;
-          --sidebar-hover-color: #ffffff;
-          --table-header-bg: #2d2d2d;
-          --table-even-row: #2a2a2a;
-          --article-bg: #252525;
-          --article-hover-bg: #303030;
-          --code-bg: #1a1a1a;
-          --inline-code-bg: rgba(0,0,0,0.3);
-      }
-      
-      body {
-          font-family: Arial, sans-serif;
-          background-color: var(--bg-color);
-          color: var(--text-color);
-          margin: 0;
-          padding: 0;
-          line-height: 1.6;
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
-          transition: background-color 0.3s, color 0.3s;
-      }
-      header {
-          background-color: var(--header-bg-color);
-          color: var(--text-color-light);
-          padding: 20px 0;
-          text-align: center;
-          width: 100%;
-      }
-      .header-content {
-          max-width: var(--max-content-width);
-          margin: 0 auto;
-          padding: 0 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-      }
-      .theme-toggle {
-          background: none;
-          border: none;
-          color: var(--text-color-light);
-          cursor: pointer;
-          font-size: 1.2em;
-          padding: 5px 10px;
-          border-radius: 5px;
-      }
-      .theme-toggle:hover {
-          background-color: rgba(255,255,255,0.1);
-      }
-      .main-container {
-          display: flex;
-          flex: 1;
-          width: 100%;
-      }
-      nav.sidebar {
-          width: var(--sidebar-width);
-          background-color: var(--sidebar-bg-color);
-          color: white;
-          padding: 20px 0;
-          position: sticky;
-          top: 0;
-          height: 100vh;
-          overflow-y: auto;
-          transition: background-color 0.3s;
-      }
-      .sidebar-content {
-          padding: 0 15px;
-      }
-      .sidebar h3 {
-          color: #ecf0f1;
-          margin-top: 15px;
-          padding-bottom: 3px;
-          border-bottom: 1px solid #34495e;
-      }
-      .sidebar ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-      }
-      .sidebar li {
-          margin-bottom: 2px;
-      }
-      .sidebar a {
-          color: var(--sidebar-text-color);
-          text-decoration: none;
-          display: block;
-          padding: 3px 0;
-          transition: all 0.3s;
-          min-height: 36px;
-          display: flex;
-          align-items: center;
-      }
-      .sidebar a:hover {
-          color: var(--sidebar-hover-color);
-          padding-left: 5px;
-      }
-      .toc-item-h1 {
-          font-weight: bold;
-          margin-left: 0;
-      }
-      .toc-item-h2 {
-          margin-left: 10px;
-          font-size: 0.9em;
-      }
-      .toc-item-h3 {
-          margin-left: 20px;
-          font-size: 0.85em;
-      }
-      main {
-          flex: 1;
-          padding: 20px;
-          max-width: calc(var(--max-content-width) - var(--sidebar-width));
-          margin: 0 auto;
-          box-sizing: border-box;
-      }
-      footer {
-          background-color: var(--footer-bg-color);
-          color: var(--text-color-light);
-          text-align: center;
-          padding: 20px 0;
-          width: 100%;
-      }
-      .footer-content {
-          max-width: var(--max-content-width);
-          margin: 0 auto;
-          padding: 0 20px;
-      }
-      a {
-          color: var(--primary-color);
-          text-decoration: none;
-      }
-      a:hover {
-          text-decoration: underline;
-      }
-      h1 {
-          margin: 0;
-      }
-      h2 {
-          border-bottom: 2px solid var(--text-color);
-          padding-bottom: 5px;
-          margin-top: 25px;
-      }
-      .section {
-          margin-bottom: 20px;
-          background-color: var(--content-bg-color);
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-          flex: 1;
-          min-width: 300px;
-          margin: 10px;
-          transition: background-color 0.3s;
-      }
-      .indent {
-          margin-left: 20px;
-      }
-      table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-top: 15px;
-      }
-      th, td {
-          border: 1px solid #444;
-          padding: 8px;
-          text-align: left;
-      }
-      th {
-          background-color: var(--table-header-bg);
-          color: white;
-      }
-      tr:nth-child(even) {
-          background-color: var(--table-even-row);
-      }
-      .year-header {
-          background-color: #666;
-          color: white;
-          font-weight: bold;
-          font-size: 1.1em;
-      }
-      .project-type {
-          font-weight: bold;
-      }
-      .back-to-top {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background-color: var(--header-bg-color);
-          color: var(--text-color-light);
-          width: 40px;
-          height: 40px;
-          text-align: center;
-          line-height: 40px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: none;
-          z-index: 99;
-      }
-      .back-to-top:hover {
-          background-color: #555;
-      }
-      .article-list {
-          list-style-type: none;
-          padding: 0;
-      }
-      .article-item {
-          padding: 10px 15px;
-          margin-bottom: 8px;
-          background-color: var(--article-bg);
-          border-left: 4px solid var(--primary-color);
-          transition: all 0.3s ease;
-      }
-      .article-item:hover {
-          background-color: var(--article-hover-bg);
-          transform: translateX(5px);
-      }
-      .article-item a {
-          display: block;
-          color: var(--text-color);
-          font-weight: 500;
-      }
-      .article-item a:hover {
-          color: var(--primary-color);
-          text-decoration: none;
-      }
-      .article-date {
-          font-size: 0.9em;
-          color: #6c757d;
-          margin-top: 5px;
-      }
-      .article-columns {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-      }
-      
-      /* Markdown 相关样式 */
-      .markdown-body {
-          max-width: var(--max-content-width);
-          margin: 0 auto;
-          padding: 20px;
-          background-color: var(--content-bg-color);
-          border-radius: 8px;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-          transition: background-color 0.3s;
-      }
-      
-      .markdown-body pre {
-          background-color: var(--code-bg);
-          padding: 16px;
-          border-radius: 6px;
-          overflow: auto;
-          transition: background-color 0.3s;
-      }
-      
-      .markdown-body code {
-          font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-          background-color: var(--inline-code-bg);
-          border-radius: 3px;
-          padding: 0.2em 0.4em;
-          transition: background-color 0.3s;
-      }
-      
-      /* Markdown 代码高亮相关样式 */
-    .markdown-body .hljs {
-      padding: 1em;
-      border-radius: 6px;
-      font-size: 0.9em;
-      line-height: 1.5;
-    }
-
-    .markdown-body .inline-code {
-      padding: 0.2em 0.4em;
-      margin: 0;
-      font-size: 85%;
-      border-radius: 3px;
-    }
-
-    .markdown-body .table-wrapper {
-      overflow-x: auto;
-      margin-bottom: 1em;
-    }
-
-    .dark-mode .markdown-body .hljs {
-      background: #1a1a1a;
-    }
-
-    .dark-mode .markdown-body .inline-code {
-      background: rgba(240,246,252,0.15);
-      color: #e6edf3;
-    }
-      
-      /* 移动设备样式 */
-      @media (max-width: 768px) {
-          .main-container {
-              flex-direction: column;
-          }
-          
-          nav.sidebar {
-              width: 100%;
-              height: auto;
-              position: relative;
-              padding: 15px 0;
-          }
-          
-          main {
-              padding: 15px;
-              max-width: 100%;
-          }
-          
-          h1 {
-              font-size: 1.8em;
-          }
-          
-          h2 {
-              font-size: 1.5em;
-          }
-          
-          table {
-              display: block;
-              overflow-x: auto;
-              white-space: nowrap;
-              font-size: 0.9em;
-          }
-          
-          th, td {
-              padding: 6px 4px;
-          }
-          
-          .markdown-body {
-              padding: 15px;
-          }
-          
-          #nav-menu {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              gap: 10px;
-          }
-          
-          #nav-menu li {
-              margin: 0;
-          }
-          
-          #toc {
-              max-height: 200px;
-              overflow-y: auto;
-          }
-          
-          .article-columns {
-              flex-direction: column;
-          }
-          
-          .section {
-              margin: 5px 0;
-              padding: 15px;
-          }
-          
-          body {
-              font-size: 16px;
-              line-height: 1.5;
-          }
-          
-          .sidebar a {
-              padding: 10px 0;
-          }
-      }
-      
-      /* 中等屏幕样式 (769px-1000px) */
-      @media (min-width: 769px) and (max-width: 1000px) {
-          nav.sidebar {
-              width: 200px;
-          }
-          
-          main {
-              max-width: calc(100% - 200px);
-          }
-          
-          .section {
-              min-width: auto;
-          }
-      }
-  </style>
-  
-  <!-- 引入marked.js -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- 添加 highlight.js 支持 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <!-- 添加更多语言支持 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/verilog.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/markdown.min.js"></script>
-
-  <style>
-    /* 深色模式下的 Markdown 样式 */
-    .dark-mode .markdown-body {
-      color-scheme: dark;
-      background-color: #0d1117;
-      color: #c9d1d9;
-    }
-
-    /* 添加深色模式滚动条样式 */
-    .dark-mode *::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
-    }
-
-    .dark-mode *::-webkit-scrollbar-track {
-      background: #1a1a1a;
-    }
-
-    .dark-mode *::-webkit-scrollbar-thumb {
-      background-color: #333;
-      border-radius: 6px;
-      border: 3px solid #1a1a1a;
-    }
-
-    .dark-mode *::-webkit-scrollbar-thumb:hover {
-      background-color: #444;
-    }
-
-    .dark-mode .markdown-body pre {
-      background-color: #161b22;
-    }
-
-    .dark-mode .markdown-body code {
-      background-color: rgba(240,246,252,0.15);
-      color: #c9d1d9;
-    }
-
-    .dark-mode .markdown-body img {
-      background-color: #0d1117;
-    }
-
-    .dark-mode .markdown-body h1,
-    .dark-mode .markdown-body h2,
-    .dark-mode .markdown-body h3,
-    .dark-mode .markdown-body h4,
-    .dark-mode .markdown-body h5,
-    .dark-mode .markdown-body h6 {
-      color: #c9d1d9;
-      border-bottom-color: #21262d;
-    }
-
-    .dark-mode .markdown-body a {
-      color: #58a6ff;
-    }
-
-    .dark-mode .markdown-body hr {
-      background-color: #30363d;
-    }
-
-    .dark-mode .markdown-body blockquote {
-      color: #8b949e;
-      border-left-color: #3b434b;
-    }
-
-    .dark-mode .markdown-body table th,
-    .dark-mode .markdown-body table td {
-      border-color: #30363d;
-    }
-
-    .dark-mode .markdown-body table tr {
-      background-color: #0d1117;
-      border-top-color: #30363d;
-    }
-
-    .dark-mode .markdown-body table tr:nth-child(2n) {
-      background-color: #161b22;
-    }
-
-    /* 代码高亮相关样式优化 */
-    .markdown-body pre {
-      position: relative;
-      margin: 1em 0;
-    }
-
-    .markdown-body pre > code {
-      display: block;
-      padding: 16px;
-      overflow-x: auto;
-      font-size: 14px;
-      line-height: 1.45;
-      background-color: var(--code-bg);
-      border-radius: 6px;
-    }
-
-    .hljs {
-      background: transparent !important;
-      padding: 0 !important;
-    }
-
-    .dark-mode .markdown-body pre > code {
-      background-color: #161b22;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>verilog语法入门 - lzt404的频道</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../../../assets/css/markdown-viewer.css">
+    <!-- Using Highlight.js with GitHub theme (both light and dark) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css" id="highlight-light">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github-dark.min.css" id="highlight-dark" disabled>
 </head>
-
 <body>
-  <header>
-    <div class="header-content">
-        <h1>Verilog语法入门</h1>
-        <button class="theme-toggle" id="themeToggle">🌓</button>
-    </div>
-  </header>
-
-  <div class="main-container">
-    <nav class="sidebar">
-      <div class="sidebar-content">
-        <h3>导航</h3>
-        <ul id="nav-menu">
-          <li><a href="http://www.lzt404.cn">首页</a></li>
-          <li><a href="#">关于</a></li>
-          <li><a href="#">联系</a></li>
-        </ul>
-        
-        <h3>文档目录</h3>
-        <ul id="toc"></ul>
-      </div>
-    </nav>
+    <header>
+        <div class="header-content">
+            <h1>verilog语法入门</h1>
+        </div>
+    </header>
 
     <main>
-      <div id="content" class="markdown-body"></div>
+        <div class="section" style="text-align: center;">
+            <div class="nav-links">
+                <a href="../../../index.html" class="nav-link">首页</a>
+                <a href="../../../tools/index.html" class="nav-link">工具箱</a>
+                <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" class="nav-link">知乎</a>
+                <a href="https://github.com/lzt404" target="_blank" class="nav-link">Github</a>
+            </div>
+        </div>
+
+        <div class="markdown-container">
+            <aside class="toc-sidebar">
+                <div class="toc-header">目录</div>
+                <div id="toc" class="toc-content"></div>
+            </aside>
+            <article id="content" class="markdown-body"></article>
+        </div>
     </main>
-  </div>
 
-  <footer>
-    <div class="footer-content">
-        <p>&copy; 2025 你好。</p>
-    </div>
-  </footer>
-  <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="current-year">2024</span> lzt404</p>
+        </div>
+    </footer>
 
-  <script>
-    // 主题切换功能
-    const themeToggle = document.getElementById('themeToggle');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // 检查本地存储或系统偏好
-    function checkTheme() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-        document.body.classList.add('dark-mode');
-        themeToggle.textContent = '☀️';
-      } else {
-        document.body.classList.remove('dark-mode');
-        themeToggle.textContent = '🌙';
-      }
-    }
-    
-    // 切换主题
-    function toggleTheme() {
-      if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-        themeToggle.textContent = '🌙';
-      } else {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-        themeToggle.textContent = '☀️';
-      }
-    }
-    
-    // 监听系统主题变化
-    prefersDarkScheme.addEventListener('change', checkTheme);
-    
-    // 返回顶部按钮显示/隐藏
-    window.onscroll = function() {
-        var backToTop = document.querySelector('.back-to-top');
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            backToTop.style.display = 'block';
-        } else {
-            backToTop.style.display = 'none';
+    <button id="theme-toggle" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;">🌙</button>
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script>
+        // 获取当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 返回顶部按钮
+        window.onscroll = function() {
+            var backToTop = document.querySelector('.back-to-top');
+            backToTop.style.display = document.documentElement.scrollTop > 300 ? 'block' : 'none';
+        };
+
+        // Markdown处理
+        async function loadMarkdown() {
+            try {
+                const response = await fetch('tmp.md');
+                if (!response.ok) throw new Error(`Failed to load: ${response.status}`);
+                const text = await response.text();
+                
+                // 配置Marked选项
+                marked.setOptions({
+                    highlight: function(code, lang) {
+                        if (lang && hljs.getLanguage(lang)) {
+                            return hljs.highlight(code, { language: lang }).value;
+                        }
+                        return hljs.highlightAuto(code).value;
+                    },
+                    breaks: true,
+                    gfm: true
+                });
+                
+                // 渲染Markdown
+                document.getElementById('content').innerHTML = marked.parse(text);
+                
+                // 生成TOC目录
+                generateTOC();
+                
+                // 确保代码高亮应用
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+                
+                // 应用当前主题
+                applyCurrentTheme();
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error-message">
+                        <h2>加载失败</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
         }
-    };
 
-    // 生成目录函数
-    function generateTOC() {
-      const content = document.getElementById('content');
-      const headings = content.querySelectorAll('h1, h2, h3');
-      const toc = document.getElementById('toc');
-      
-      if (headings.length === 0) {
-        toc.innerHTML = '<li>暂无目录</li>';
-        return;
-      }
-      
-      let tocHTML = '';
-      let lastLevel = 1;
-      
-      headings.forEach((heading, index) => {
-        const level = parseInt(heading.tagName.substring(1));
-        const id = `heading-${index}`;
-        heading.id = id;
-        
-        if (level > lastLevel) {
-          tocHTML += '<ul>';
-        } else if (level < lastLevel) {
-          tocHTML += '</ul>'.repeat(lastLevel - level);
-        }
-        
-        tocHTML += `<li class="toc-item-h${level}"><a href="#${id}">${heading.textContent}</a></li>`;
-        lastLevel = level;
-      });
-      
-      toc.innerHTML = tocHTML;
-    }
-
-    // 加载并渲染外部 Markdown 文件
-    async function loadMarkdown(url) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`加载失败: ${response.status}`);
-        const markdown = await response.text();
-        
-        // 配置 marked
-        marked.setOptions({
-          highlight: function(code, language) {
-            const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-            return hljs.highlight(code, { 
-              language: validLanguage,
-              ignoreIllegals: true 
-            }).value;
-          },
-          langPrefix: 'hljs language-',
-          pedantic: false,
-          gfm: true,
-          breaks: false,
-          sanitize: false,
-          smartypants: true
-        });
-        
-        // 渲染Markdown
-        document.getElementById('content').innerHTML = marked.parse(markdown);
-        
         // 生成目录
-        generateTOC();
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3');
+            toc.innerHTML = '';
+            
+            headings.forEach((heading, index) => {
+                const id = `section-${index}`;
+                heading.id = id;
+                
+                const level = parseInt(heading.tagName.substring(1));
+                const tocItem = document.createElement('a');
+                tocItem.href = `#${id}`;
+                tocItem.textContent = heading.textContent;
+                tocItem.classList.add('toc-item', `toc-level-${level}`);
+                tocItem.style.paddingLeft = `${(level - 1) * 16}px`;
+                
+                toc.appendChild(tocItem);
+            });
+        }
         
-        // 强制对所有代码块应用高亮
-        document.querySelectorAll('pre code').forEach((block) => {
-          hljs.highlightElement(block);
+        // 应用当前主题到高亮样式
+        function applyCurrentTheme() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            document.getElementById('highlight-light').disabled = isDarkMode;
+            document.getElementById('highlight-dark').disabled = !isDarkMode;
+        }
+        
+        // 扩展toggleTheme函数，确保高亮也跟随主题切换
+        const originalToggleTheme = window.toggleTheme;
+        window.toggleTheme = function() {
+            if (originalToggleTheme) originalToggleTheme();
+            applyCurrentTheme();
+        };
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMarkdown();
+            
+            // 确保主题图标正确显示
+            const themeToggle = document.getElementById('theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
         });
-        
-      } catch (error) {
-        console.error('加载Markdown出错:', error);
-        document.getElementById('content').innerHTML = `
-          <div class="section">
-            <p style="color: red">错误: ${error.message}</p>
-            <p>请检查Markdown文件路径是否正确</p>
-          </div>
-        `;
-      }
-    }
-
-    // 初始化页面
-    document.addEventListener('DOMContentLoaded', function() {
-      // 初始化主题
-      checkTheme();
-      
-      // 添加主题切换事件
-      themeToggle.addEventListener('click', toggleTheme);
-      
-      // 替换为你的 Markdown 文件路径
-      loadMarkdown('tmp.md');
-    });
-  </script>
+    </script>
 </body>
 </html>

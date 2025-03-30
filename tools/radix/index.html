@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>进制转换工具（顺序显示 rs1 → rs2 → rd）</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../assets/css/dark-mode.css">
     <style>
         .bit-container {
             display: flex;
@@ -117,8 +118,11 @@
             const section = document.getElementById(sectionId);
             section.innerHTML = `<h3 class='title is-5'>${prefix} (位 ${startBit} 到 位 ${endBit}):</h3>`;
 
-            // 提取指定位范围的二进制值
-            const binarySegment = binaryString.slice(-endBit - 1, binaryString.length - startBit);
+            const binaryLength = binaryString.length;
+            const start = Math.max(0, binaryLength - endBit - 1);
+            const end = Math.min(binaryLength - startBit, binaryLength);
+            const binarySegment = binaryString.slice(start, end);
+            
             const decimalValue = parseInt(binarySegment, 2);
 
             // 显示二进制值
@@ -208,5 +212,8 @@
             </div>
         </div>
     </section>
+    <button id="theme-toggle" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;">🌙</button>
+    
+    <script src="../../assets/js/theme.js"></script>
 </body>
 </html>

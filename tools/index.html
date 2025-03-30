@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lzt404的工具箱</title>
     <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
     <style>
         :root {
             --header-bg-color: #333;
@@ -254,6 +255,9 @@
         </div>
     </footer>
     <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+    <button id="theme-toggle" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;">🌙</button>
+    
+    <script src="../assets/js/theme.js"></script>
 
     <script>
         // 返回顶部按钮显示/隐藏

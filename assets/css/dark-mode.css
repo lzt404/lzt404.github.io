@@ -1,0 +1,122 @@
+:root {
+    --dark-bg: #1a1a1a;
+    --dark-text: #e0e0e0;
+    --dark-link: #58a6ff;
+    --dark-border: #333;
+    --dark-code-bg: #2d2d2d;
+    --dark-hover: #333;
+}
+
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.dark-mode a {
+    color: var(--dark-link);
+}
+
+.dark-mode .section {
+    background-color: #242424;
+    border-color: var(--dark-border);
+}
+
+.dark-mode pre, .dark-mode code {
+    background-color: var(--dark-code-bg);
+    color: #e0e0e0;
+}
+
+.dark-mode .article-item {
+    background-color: #242424;
+    border-left-color: var(--dark-link);
+}
+
+.dark-mode .article-item:hover {
+    background-color: var(--dark-hover);
+}
+
+.dark-mode table th {
+    background-color: #333;
+}
+
+.dark-mode table td {
+    border-color: #444;
+}
+
+.dark-mode table tr:nth-child(even) {
+    background-color: #2a2a2a;
+}
+
+.dark-mode .hljs {
+    background: #1e1e1e !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --content-bg-color: #1e1e1e;
+    --sidebar-bg-color: #1a1a1a;
+    --sidebar-text-color: #a0a0a0;
+    --sidebar-hover-color: #ffffff;
+    --table-header-bg: #2d2d2d;
+    --table-even-row: #2a2a2a;
+    --article-bg: #252525;
+    --article-hover-bg: #303030;
+    --code-bg: #1a1a1a;
+    --inline-code-bg: rgba(0,0,0,0.3);
+}
+
+.dark-mode .markdown-body {
+    color-scheme: dark;
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+
+.dark-mode *::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.dark-mode *::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.dark-mode *::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 6px;
+    border: 3px solid #1a1a1a;
+}
+
+/* 代码高亮夜间模式 */
+.dark-mode .hljs {
+    background: #161b22 !important;
+    color: #c9d1d9 !important;
+}
+
+.dark-mode .markdown-body pre {
+    background-color: #161b22 !important;
+}
+
+.dark-mode .markdown-body code:not(.hljs) {
+    background-color: rgba(240,246,252,0.15) !important;
+    color: #c9d1d9 !important;
+}
+
+/* TOC夜间模式 */
+.dark-mode #toc a {
+    color: #c9d1d9;
+}
+
+.dark-mode #toc a:hover {
+    color: #58a6ff;
+}
+
+.dark-mode .markdown-body pre {
+    background-color: #161b22;
+}
+
+.dark-mode .markdown-body code {
+    background-color: rgba(240,246,252,0.15);
+    color: #c9d1d9;
+}

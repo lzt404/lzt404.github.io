@@ -6,230 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lzt404的频道</title>
     <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
-    <style>
-        :root {
-            --header-bg-color: #333;
-            --footer-bg-color: #333;
-            --text-color-light: white;
-            --primary-color: #007BFF;
-            --max-content-width: 1200px;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background-color: var(--header-bg-color);
-            color: var(--text-color-light);
-            padding: 20px 0;
-            text-align: center;
-            width: 100%;
-        }
-        .header-content {
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        main {
-            padding: 20px;
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            flex: 1;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        footer {
-            background-color: var(--footer-bg-color);
-            color: var(--text-color-light);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            width: 100%;
-        }
-        .footer-content {
-            max-width: var(--max-content-width);
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        h1 {
-            margin: 0;
-        }
-        h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 5px;
-            margin-top: 25px;
-        }
-        .section {
-            margin-bottom: 20px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            flex: 1;
-            min-width: 300px;
-            margin: 10px;
-        }
-        .indent {
-            margin-left: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #333;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .year-header {
-            background-color: #666;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        .project-type {
-            font-weight: bold;
-        }
-        /* 返回顶部按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--header-bg-color);
-            color: var(--text-color-light);
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            z-index: 99;
-        }
-        .back-to-top:hover {
-            background-color: #555;
-        }
-        /* 文章列表样式 */
-        .article-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .article-item {
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--primary-color);
-            transition: all 0.3s ease;
-        }
-        .article-item:hover {
-            background-color: #e9ecef;
-            transform: translateX(5px);
-        }
-        .article-item a {
-            display: block;
-            color: #333;
-            font-weight: 500;
-        }
-        .article-item a:hover {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        .article-date {
-            font-size: 0.9em;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        /* 三栏布局 */
-        .article-columns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        @media (max-width: 1000px) {
-            .article-columns {
-                flex-direction: column;
-            }
-            .section {
-                min-width: auto;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
 </head>
 
 <body>
     <header>
         <div class="header-content">
             <h1></h1>
-            <!-- 可以在这里添加导航菜单 -->
         </div>
     </header>
 
     <main>
-        <!-- 个人信息部分 -->
         <div id="about" class="section" style="text-align: center;">
-            <!-- <img src="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" alt="个人头像" style="max-width: 200px; border-radius: 20%; margin-bottom: 15px;"> -->
-            <!-- <p><strong>大连海事大学，网络工程本科大三在读，电航学社社长</strong></p> -->
-            <!-- <p><strong>我想成为会EE与CS的魔术师</strong></p> -->
             <p>梁展通 邮箱: <a href="mailto:2596933790@qq.com">2596933790@qq.com</a></p>
-            <!-- 新增的社交平台链接和About Me链接 -->
-            <div style="margin-top: 15px;">
-                <!-- <a href="https://github.com/yourusername" target="_blank" style="margin: 0 10px;">
-                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" style="width: 30px; height: 30px;">
-                </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" style="margin: 0 10px;">
-                    <img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" alt="LinkedIn" style="width: 30px; height: 30px;">
-                </a>
-                <a href="https://twitter.com/yourusername" target="_blank" style="margin: 0 10px;">
-                    <img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="Twitter" style="width: 30px; height: 30px;">
-                </a> -->
-                <div style="margin-top: 15px; text-align: center;">
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 600px; margin: 0 auto;">
-                        <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" rel="noopener noreferrer" 
-                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
-                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
-                            知乎
-                        </a>
-                        <a href="https://github.com/lzt404" target="_blank" rel="noopener noreferrer" 
-                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
-                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
-                            Github
-                        </a>
-                        <a href="./tools/index.html" target="_blank" rel="noopener noreferrer" 
-                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
-                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
-                            工具
-                        </a>
-                        <a href="aboutme/index.html" target="_blank" rel="noopener noreferrer" 
-                           style="display: inline-block; padding: 6px 12px; background-color: #333; color: white; 
-                                  border-radius: 4px; text-decoration: none; min-width: 80px; text-align: center; font-size: 14px;">
-                            about me
-                        </a>
-                    </div>
-                </div>
+            <div class="social-links">
+                <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" class="nav-link">知乎</a>
+                <a href="https://github.com/lzt404" target="_blank" class="nav-link">Github</a>
+                <a href="./tools/index.html" target="_blank" class="nav-link">工具</a>
+                <a href="aboutme/index.html" target="_blank" class="nav-link">about me</a>
             </div>
-</div>
         </div>
 
         <!-- 三栏文章列表 -->
@@ -279,7 +76,7 @@
                 <h2><a href="#" target="_blank" style="color: black;">FPGA</a></h2>
                 <ul class="article-list">
                     <li class="article-item">
-                        <a href="#" target="_blank">verilog语法入门(待写)</a>
+                        <a href="article/fpga/verilog-language/" target="_blank">verilog语法入门</a>
                         <div class="article-date">2024年6月</div>
                     </li>
                 </ul>
@@ -354,43 +151,13 @@
             <p>&copy; </p>
         </div>
     </footer>
-    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+    <div class="back-to-top">↑</div>
 
-    <script>
-        // 返回顶部按钮显示/隐藏
-        window.onscroll = function() {
-            var backToTop = document.querySelector('.back-to-top');
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTop.style.display = 'block';
-            } else {
-                backToTop.style.display = 'none';
-            }
-        };
-        
-        // 统一的配置对象，方便修改header和footer内容
-        const siteConfig = {
-            header: {
-                title: "",
-                navLinks: [
-                    // 可以在这里添加导航链接
-                ]
-            },
-            footer: {
-                copyright: "&copy; 2025 你好。",
-                links: [
-                    // 可以在这里添加页脚链接
-                ]
-            }
-        };
-        
-        // 初始化页面内容
-        document.addEventListener('DOMContentLoaded', function() {
-            // 设置header内容
-            document.querySelector('header h1').textContent = siteConfig.header.title;
-            
-            // 设置footer内容
-            document.querySelector('footer p').innerHTML = siteConfig.footer.copyright;
-        });
-    </script>
+    <button id="theme-toggle" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;">🌙</button>
+    
+    <script src="assets/js/theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

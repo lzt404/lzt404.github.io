@@ -1,0 +1,60 @@
+:root {
+    --header-bg-color: #333;
+    --footer-bg-color: #333;
+    --text-color-light: white;
+    --primary-color: #007BFF;
+    --max-content-width: 1200px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+// ...existing common styles...
+
+.social-links {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.social-links a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    min-width: 80px;
+    text-align: center;
+    font-size: 14px;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #555;
+    text-decoration: none;
+}
+
+.article-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+// ...existing article styles...
+
+@media (max-width: 1000px) {
+    .article-columns {
+        flex-direction: column;
+    }
+    .section {
+        min-width: auto;
+    }
+}
