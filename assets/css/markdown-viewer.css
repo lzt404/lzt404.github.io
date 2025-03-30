@@ -300,3 +300,56 @@ body.dark-mode {
   background: var(--markdown-code-bg) !important;
   color: var(--markdown-code-text) !important;
 }
+
+/* 复制按钮相关样式 */
+.copy-button-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+pre:hover .copy-button-container,
+blockquote:hover .copy-button-container {
+  opacity: 1;
+}
+
+.copy-button {
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.copy-button.success {
+  background-color: #28a745;
+}
+
+/* 暗黑模式下的样式调整 */
+body.dark-mode .copy-button {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .copy-button.success {
+  background-color: #28a745;
+}
+
+/* 为引用块的复制按钮调整位置 */
+.copy-button-container.quote {
+  top: 0;
+  right: 0;
+}

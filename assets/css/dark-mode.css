@@ -1,3 +1,4 @@
+/* Dark mode variables */
 :root {
     --dark-bg: #1a1a1a;
     --dark-text: #e0e0e0;
@@ -5,8 +6,12 @@
     --dark-border: #333;
     --dark-code-bg: #2d2d2d;
     --dark-hover: #333;
+    --dark-content-bg: #242424;
+    --dark-header-bg: #1a1a1a;
+    --dark-footer-bg: #1a1a1a;
 }
 
+/* Basic dark mode styling */
 body.dark-mode {
     background-color: var(--dark-bg);
     color: var(--dark-text);
@@ -17,17 +22,27 @@ body.dark-mode {
 }
 
 .dark-mode .section {
-    background-color: #242424;
+    background-color: var(--dark-content-bg);
     border-color: var(--dark-border);
 }
 
+.dark-mode header {
+    background-color: var(--dark-header-bg);
+}
+
+.dark-mode footer {
+    background-color: var(--dark-footer-bg);
+}
+
+/* Code elements in dark mode */
 .dark-mode pre, .dark-mode code {
     background-color: var(--dark-code-bg);
     color: #e0e0e0;
 }
 
+/* Article items in dark mode */
 .dark-mode .article-item {
-    background-color: #242424;
+    background-color: var(--dark-content-bg);
     border-left-color: var(--dark-link);
 }
 
@@ -35,6 +50,7 @@ body.dark-mode {
     background-color: var(--dark-hover);
 }
 
+/* Table styling in dark mode */
 .dark-mode table th {
     background-color: #333;
 }
@@ -47,11 +63,13 @@ body.dark-mode {
     background-color: #2a2a2a;
 }
 
+/* Syntax highlighting in dark mode */
 .dark-mode .hljs {
     background: #1e1e1e !important;
     color: #e0e0e0 !important;
 }
 
+/* Global variable overrides for dark mode */
 .dark-mode {
     --bg-color: #121212;
     --text-color: #e0e0e0;
@@ -67,12 +85,14 @@ body.dark-mode {
     --inline-code-bg: rgba(0,0,0,0.3);
 }
 
+/* Markdown body styling in dark mode */
 .dark-mode .markdown-body {
     color-scheme: dark;
     background-color: #0d1117;
     color: #c9d1d9;
 }
 
+/* Scrollbar styling */
 .dark-mode *::-webkit-scrollbar {
     width: 12px;
     height: 12px;

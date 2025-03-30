@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络学习资料 - lzt404的频道</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/dark-mode.css">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nav-link i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>网络学习资料</h1>
+            <button id="theme-toggle" onclick="toggleTheme()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2rem;">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section" style="text-align: center;">
+            <div class="nav-links">
+                <a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>首页</a>
+                <a href="../../tools/index.html" class="nav-link"><i class="fas fa-toolbox"></i>工具箱</a>
+                <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" class="nav-link"><i class="fab fa-zhihu"></i>知乎</a>
+                <a href="https://github.com/lzt404" target="_blank" class="nav-link"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <!-- 使用与主页相同的文章列表布局 -->
+        <div class="article-columns">
+            <div class="section">
+                <h2>基础知识</h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="./tcpip-basics/" target="_blank">TCP/IP协议基础</a>
+                        <div class="article-date">2024年7月</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>进阶内容</h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="#" target="_blank">网络安全与加密（待更新）</a>
+                        <div class="article-date">即将发布</div>
+                    </li>
+                    <li class="article-item">
+                        <a href="#" target="_blank">SDN软件定义网络（待更新）</a>
+                        <div class="article-date">即将发布</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>工具资源</h2>
+                <ul class="article-list">
+                    <li class="article-item">
+                        <a href="#" target="_blank">网络抓包分析工具（待更新）</a>
+                        <div class="article-date">即将发布</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="current-year">2024</span> lzt404</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+    
+    <script src="../../assets/js/theme.js"></script>
+    <script>
+        // 获取当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 返回顶部按钮显示/隐藏
+        window.onscroll = function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

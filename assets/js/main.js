@@ -26,7 +26,7 @@ window.onscroll = function() {
 // Site configuration
 const siteConfig = {
     header: {
-        title: "",
+        title: "欢迎大佬的光临",
     },
     footer: {
         copyright: "&copy; 2024 lzt404."

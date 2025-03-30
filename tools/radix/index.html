@@ -7,10 +7,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="../../assets/css/dark-mode.css">
     <style>
+        :root {
+            --header-height: 60px;
+            --section-spacing: 20px;
+            --border-radius: 4px;
+            --bit-gap: 5px;
+            --section-padding: 5px;
+        }
+        
+        /* 位显示容器样式 */
         .bit-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: var(--bit-gap);
             margin-top: 5px;
         }
         .bit {
@@ -19,7 +28,7 @@
             align-items: center;
             padding: 3px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: var(--border-radius);
             background-color: #f5f5f5;
             min-width: 30px;
         }
@@ -32,8 +41,8 @@
             color: #666;
         }
         .section {
-            margin-bottom: 20px; /* 增加段间距 */
-            padding: 5px; /* 减少内边距 */
+            margin-bottom: var(--section-spacing);
+            padding: var(--section-padding);
         }
         .result-section {
             margin-top: 10px;
@@ -48,11 +57,15 @@
             min-width: 150px;
         }
         .title.is-5 {
-            margin-bottom: 5px; /* 减少标题间距 */
+            margin-bottom: 5px;
         }
     </style>
     <script>
+        /**
+         * 进行进制转换并显示分析结果
+         */
         function convert() {
+            // 获取输入值
             const number = document.getElementById("number").value;
             const fromBase = parseInt(document.getElementById("fromBase").value);
             const toBase = parseInt(document.getElementById("toBase").value);
@@ -60,13 +73,9 @@
 
             // 转换为十进制
             const decimal = parseInt(number, fromBase);
-            let result;
-
-            // 根据目标进制转换
-            if (toBase === 2) result = decimal.toString(2);
-            else if (toBase === 8) result = decimal.toString(8);
-            else if (toBase === 16) result = decimal.toString(16);
-            else result = decimal.toString();
+            
+            // 将十进制转换为目标进制
+            let result = convertToTargetBase(decimal, toBase);
 
             // 补充前导零
             if (padding > 0) {
@@ -79,12 +88,27 @@
             // 显示完整结果的每一位位数
             displayFullResultBits(result);
 
-            // 显示分段结果（按顺序 rs1 → rs2 → rd）
-            displaySection(result, 15, 19, "section1", "rs1");
-            displaySection(result, 20, 24, "section2", "rs2");
-            displaySection(result, 7, 11, "section3", "rd");
+            // 显示RISC-V指令字段（按顺序 rs1 → rs2 → rd）
+            displayRISCVFields(result);
         }
 
+        /**
+         * 将十进制数字转换为目标进制
+         * @param {number} decimal - 十进制数字
+         * @param {number} toBase - 目标进制
+         * @returns {string} - 转换后的结果
+         */
+        function convertToTargetBase(decimal, toBase) {
+            if (toBase === 2) return decimal.toString(2);
+            if (toBase === 8) return decimal.toString(8);
+            if (toBase === 16) return decimal.toString(16);
+            return decimal.toString();
+        }
+
+        /**
+         * 显示完整结果的每一位
+         * @param {string} binaryString - 二进制字符串
+         */
         function displayFullResultBits(binaryString) {
             const fullBitContainer = document.getElementById("fullBitContainer");
             fullBitContainer.innerHTML = "<h3 class='title is-5'>完整结果的每一位:</h3>";
@@ -114,7 +138,26 @@
             fullBitContainer.appendChild(bitContainer);
         }
 
-        function displaySection(binaryString, startBit, endBit, sectionId, prefix) {
+        /**
+         * 显示RISC-V指令字段（rs1、rs2、rd）
+         * @param {string} binaryString - 二进制字符串
+         */
+        function displayRISCVFields(binaryString) {
+            // 显示各个字段（按顺序 rs1 → rs2 → rd）
+            displayInstructionField(binaryString, 15, 19, "section1", "rs1");
+            displayInstructionField(binaryString, 20, 24, "section2", "rs2");
+            displayInstructionField(binaryString, 7, 11, "section3", "rd");
+        }
+
+        /**
+         * 显示指令字段
+         * @param {string} binaryString - 二进制字符串
+         * @param {number} startBit - 起始位
+         * @param {number} endBit - 结束位
+         * @param {string} sectionId - 显示区域ID
+         * @param {string} prefix - 字段名称
+         */
+        function displayInstructionField(binaryString, startBit, endBit, sectionId, prefix) {
             const section = document.getElementById(sectionId);
             section.innerHTML = `<h3 class='title is-5'>${prefix} (位 ${startBit} 到 位 ${endBit}):</h3>`;
 
@@ -136,8 +179,21 @@
             section.appendChild(decimalDiv);
 
             // 显示每一位的位数和值
+            const bitContainer = createBitDisplay(binarySegment, startBit, endBit);
+            section.appendChild(bitContainer);
+        }
+
+        /**
+         * 创建位显示
+         * @param {string} binarySegment - 二进制段
+         * @param {number} startBit - 起始位
+         * @param {number} endBit - 结束位
+         * @returns {HTMLDivElement} - 位显示容器
+         */
+        function createBitDisplay(binarySegment, startBit, endBit) {
             const bitContainer = document.createElement("div");
             bitContainer.className = "bit-container";
+            
             for (let i = 0; i < binarySegment.length; i++) {
                 const bitDiv = document.createElement("div");
                 bitDiv.className = "bit";
@@ -154,7 +210,8 @@
                 bitDiv.appendChild(bitIndex);
                 bitContainer.appendChild(bitDiv);
             }
-            section.appendChild(bitContainer);
+            
+            return bitContainer;
         }
     </script>
 </head>
@@ -162,6 +219,7 @@
     <section class="section">
         <div class="container">
             <h1 class="title is-4">进制转换工具（顺序显示 rs1 → rs2 → rd）</h1>
+            <button id="theme-toggle" onclick="toggleTheme()" class="button" style="position: absolute; right: 10px; top: 10px;">🌙</button>
             
             <div class="box">
                 <div class="input-group">
@@ -212,7 +270,6 @@
             </div>
         </div>
     </section>
-    <button id="theme-toggle" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;">🌙</button>
     
     <script src="../../assets/js/theme.js"></script>
 </body>
