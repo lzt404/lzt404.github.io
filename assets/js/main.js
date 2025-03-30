@@ -62,13 +62,32 @@ function adjustHeaderTextWrapping() {
     const headerTitles = document.querySelectorAll('header h1');
     if (window.innerWidth <= 768) {
         headerTitles.forEach(title => {
-            if (title.textContent.length > 20) {
+            // Add multi-line ellipsis for very long titles on mobile
+            if (title.textContent.length > 30 && window.innerWidth <= 480) {
+                title.style.display = '-webkit-box';
+                title.style.webkitLineClamp = '2';
+                title.style.webkitBoxOrient = 'vertical';
+                title.style.overflow = 'hidden';
+                title.style.textOverflow = 'ellipsis';
+            } else if (title.textContent.length > 20) {
                 title.style.fontSize = '1.2rem';
                 title.style.lineHeight = '1.3';
             }
         });
+    } else {
+        // Reset styles for larger screens
+        headerTitles.forEach(title => {
+            title.style.fontSize = '';
+            title.style.lineHeight = '';
+            title.style.display = '';
+            title.style.webkitLineClamp = '';
+            title.style.webkitBoxOrient = '';
+            title.style.overflow = '';
+            title.style.textOverflow = '';
+        });
     }
 }
 
-// Update on resize
+// Update on resize and also when page content changes
 window.addEventListener('resize', adjustHeaderTextWrapping);
+document.addEventListener('DOMContentLoaded', adjustHeaderTextWrapping);
