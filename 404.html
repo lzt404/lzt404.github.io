@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 - lzt404的频道</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 50px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .error-code {
+            font-size: 120px;
+            margin-bottom: 20px;
+            font-family: "楷体", KaiTi, serif;
+            color: #8B4513;
+        }
+        
+        .error-message {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-family: "楷体", KaiTi, serif;
+            color: #555;
+        }
+        
+        .poem {
+            font-family: "楷体", KaiTi, serif;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 40px auto;
+            padding: 20px;
+            border-left: 5px solid #8B4513;
+            background-color: rgba(139, 69, 19, 0.05);
+            max-width: 500px;
+            text-align: left;
+        }
+        
+        .home-link {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: #8B4513;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .home-link:hover {
+            background-color: #A0522D;
+        }
+
+        .error-image {
+            max-width: 300px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1></h1>
+            <button id="theme-toggle" onclick="toggleTheme()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2rem;">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <div class="error-message">云深不知处，页面已飘零</div>
+            
+            <div class="poem">
+                <p>欲寻此页踪迹，却入迷途深。</p>
+                <p>云水茫茫处，何处是归程？</p>
+                <p>不如随风去，重返故园心。</p>
+                <p>一点归家路，犹胜千里寻。</p>
+            </div>
+            
+            <div class="error-image">
+                <img src="assets/images/404.png" alt="古风插画" style="max-width: 100%; height: auto; opacity: 0.8;">
+            </div>
+            
+            <a href="/" class="home-link"><i class="fas fa-home"></i> 返回主页</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; </p>
+        </div>
+    </footer>
+    <div class="back-to-top">↑</div>
+    
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // 确保主题设置正确应用
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').innerHTML = '☀️';
+            }
+        });
+    </script>
+</body>
+</html>
