@@ -52,4 +52,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (backToTop) {
         backToTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
     }
+    
+    // Ensure long headers wrap properly on mobile
+    adjustHeaderTextWrapping();
 });
+
+// Function to make sure header text wraps properly on mobile
+function adjustHeaderTextWrapping() {
+    const headerTitles = document.querySelectorAll('header h1');
+    if (window.innerWidth <= 768) {
+        headerTitles.forEach(title => {
+            if (title.textContent.length > 20) {
+                title.style.fontSize = '1.2rem';
+                title.style.lineHeight = '1.3';
+            }
+        });
+    }
+}
+
+// Update on resize
+window.addEventListener('resize', adjustHeaderTextWrapping);
