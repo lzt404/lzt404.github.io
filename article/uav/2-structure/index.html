@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 修改这里：网页标签标题 -->
+    <title>基本概念</title>
+    <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../../../assets/css/markdown-viewer.css">
+    <!-- Using Highlight.js with GitHub theme (both light and dark) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css" id="highlight-light">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github-dark.min.css" id="highlight-dark" disabled>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nav-link i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <!-- 修改这里：文章标题(左上角) -->
+            <h1>基本概念</h1>
+            <button id="theme-toggle" onclick="toggleTheme()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2rem;">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="section" style="text-align: center;">
+            <div class="nav-links">
+                <a href="../../../index.html" class="nav-link"><i class="fas fa-home"></i>首页</a>
+                <a href="../../../tools/index.html" class="nav-link"><i class="fas fa-toolbox"></i>工具箱</a>
+                <a href="https://www.zhihu.com/people/tongstark-42" target="_blank" class="nav-link"><i class="fab fa-zhihu"></i>知乎</a>
+                <a href="https://github.com/lzt404" target="_blank" class="nav-link"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <div class="markdown-container">
+            <aside class="toc-sidebar">
+                <div class="toc-header">目录</div>
+                <div id="toc" class="toc-content"></div>
+            </aside>
+            <article id="content" class="markdown-body"></article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="current-year">2025</span> lzt404</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/copy-code.js"></script>
+    <script>
+        // 获取当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 返回顶部按钮
+        window.onscroll = function() {
+            var backToTop = document.querySelector('.back-to-top');
+            backToTop.style.display = document.documentElement.scrollTop > 300 ? 'block' : 'none';
+        };
+
+        // Markdown处理
+        async function loadMarkdown() {
+            try {
+                // 修改这里：如果需要更改Markdown文件名（默认为tmp.md）
+                const response = await fetch('tmp.md');
+                if (!response.ok) throw new Error(`Failed to load: ${response.status}`);
+                const text = await response.text();
+                
+                // 配置Marked选项
+                marked.setOptions({
+                    highlight: function(code, lang) {
+                        if (lang && hljs.getLanguage(lang)) {
+                            return hljs.highlight(code, { language: lang }).value;
+                        }
+                        return hljs.highlightAuto(code).value;
+                    },
+                    breaks: true,
+                    gfm: true
+                });
+                
+                // 渲染Markdown
+                document.getElementById('content').innerHTML = marked.parse(text);
+                
+                // 生成TOC目录
+                generateTOC();
+                
+                // 确保代码高亮应用
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+                
+                // 应用当前主题
+                applyCurrentTheme();
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error-message">
+                        <h2>加载失败</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 生成目录
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3');
+            toc.innerHTML = '';
+            
+            headings.forEach((heading, index) => {
+                const id = `section-${index}`;
+                heading.id = id;
+                
+                const level = parseInt(heading.tagName.substring(1));
+                const tocItem = document.createElement('a');
+                tocItem.href = `#${id}`;
+                tocItem.textContent = heading.textContent;
+                tocItem.classList.add('toc-item', `toc-level-${level}`);
+                tocItem.style.paddingLeft = `${(level - 1) * 16}px`;
+                
+                toc.appendChild(tocItem);
+            });
+        }
+        
+        // 应用当前主题到高亮样式
+        function applyCurrentTheme() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            document.getElementById('highlight-light').disabled = isDarkMode;
+            document.getElementById('highlight-dark').disabled = !isDarkMode;
+        }
+        
+        // 扩展toggleTheme函数，确保高亮也跟随主题切换
+        const originalToggleTheme = window.toggleTheme;
+        window.toggleTheme = function() {
+            if (originalToggleTheme) originalToggleTheme();
+            applyCurrentTheme();
+        };
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMarkdown();
+            
+            // 确保主题图标正确显示
+            const themeToggle = document.getElementById('theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+        });
+    </script>
+</body>
+</html>
