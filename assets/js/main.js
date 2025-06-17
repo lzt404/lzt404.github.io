@@ -29,7 +29,7 @@ const siteConfig = {
         title: "欢迎大佬的光临",
     },
     footer: {
-        copyright: "&copy; 2024 lzt404."
+        copyright: "&copy; 2025 lzt404."
     }
 };
 

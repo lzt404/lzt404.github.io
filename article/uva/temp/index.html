@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCP/IP协议基础 - lzt404的频道</title>
+    <!-- 修改这里：网页标签标题 -->
+    <title>这是一个标题</title>
     <link rel="icon" href="https://picx.zhimg.com/80/v2-13292511e82d6820ca79e7c866e6d207_1440w.png" type="image/png">
     <link rel="stylesheet" href="../../../assets/css/main.css">
     <link rel="stylesheet" href="../../../assets/css/dark-mode.css">
@@ -22,7 +23,8 @@
 <body>
     <header>
         <div class="header-content">
-            <h1>TCP/IP协议基础</h1>
+            <!-- 修改这里：文章标题(左上角) -->
+            <h1>这是个标签</h1>
             <button id="theme-toggle" onclick="toggleTheme()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2rem;">🌙</button>
         </div>
     </header>
@@ -71,6 +73,7 @@
         // Markdown处理
         async function loadMarkdown() {
             try {
+                // 修改这里：如果需要更改Markdown文件名（默认为tmp.md）
                 const response = await fetch('tmp.md');
                 if (!response.ok) throw new Error(`Failed to load: ${response.status}`);
                 const text = await response.text();
