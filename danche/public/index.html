@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共享单车 - 绿色出行新选择</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-bicycle"></i>
+                <span>共享单车</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#services" class="nav-link">服务</a>
+                <a href="#pricing" class="nav-link">价格</a>
+                <a href="#contact" class="nav-link">联系我们</a>
+                <button class="admin-btn" onclick="showDataStats()" title="查看收集的数据">📊 数据管理</button>
+                <button class="login-btn" onclick="showLoginModal()">登录</button>
+                <button class="register-btn" onclick="showRegisterModal()">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页面 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>绿色出行，从这里开始</h1>
+            <p>随时随地，扫码即走，让城市出行更简单</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="showRegisterModal()">立即注册</button>
+                <button class="btn-secondary" onclick="scrollToServices()">了解更多</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-bicycle hero-icon"></i>
+        </div>
+    </section>
+
+    <!-- 服务介绍 -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>我们的服务</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>扫码解锁</h3>
+                    <p>手机扫码，一键解锁，操作简单便捷</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>就近取车</h3>
+                    <p>GPS定位，找到最近的可用单车</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>24小时服务</h3>
+                    <p>全天候服务，随时满足您的出行需求</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>绿色环保</h3>
+                    <p>低碳出行，为环保事业贡献力量</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 价格方案 -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>价格方案</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>按次计费</h3>
+                    <div class="price">
+                        <span class="currency">¥</span>
+                        <span class="amount">1</span>
+                        <span class="period">/15分钟</span>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 随用随付</li>
+                        <li><i class="fas fa-check"></i> 无需押金</li>
+                        <li><i class="fas fa-check"></i> 超时自动计费</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="selectPlan('single', 1)">选择方案</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">推荐</div>
+                    <h3>月卡套餐</h3>
+                    <div class="price">
+                        <span class="currency">¥</span>
+                        <span class="amount">25</span>
+                        <span class="period">/月</span>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 每天2小时免费</li>
+                        <li><i class="fas fa-check"></i> 超时优惠价</li>
+                        <li><i class="fas fa-check"></i> 优先用车</li>
+                        <li><i class="fas fa-check"></i> 专属客服</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="selectPlan('monthly', 25)">选择方案</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>年卡套餐</h3>
+                    <div class="price">
+                        <span class="currency">¥</span>
+                        <span class="amount">268</span>
+                        <span class="period">/年</span>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 全年无限次</li>
+                        <li><i class="fas fa-check"></i> 每次2小时免费</li>
+                        <li><i class="fas fa-check"></i> VIP专属权益</li>
+                        <li><i class="fas fa-check"></i> 免费保险</li>
+                    </ul>
+                    <button class="btn-pricing" onclick="selectPlan('yearly', 268)">选择方案</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>登录账户</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn-submit">登录</button>
+            </form>
+            <p class="switch-form">还没有账户？<a href="#" onclick="switchToRegister()">立即注册</a></p>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>注册账户</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">手机号</label>
+                    <input type="tel" id="registerPhone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-submit">注册</button>
+            </form>
+            <p class="switch-form">已有账户？<a href="#" onclick="switchToLogin()">立即登录</a></p>
+        </div>
+    </div>
+
+    <!-- 支付模态框 -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h2>支付确认</h2>
+            <div class="payment-info">
+                <div class="payment-details">
+                    <h3>订单详情</h3>
+                    <p>方案类型：<span id="planType"></span></p>
+                    <p>支付金额：¥<span id="paymentAmount"></span></p>
+                    <p>单车编号：<span id="bikeNumber"></span></p>
+                </div>
+                <button class="btn-submit" onclick="processPayment()">确认支付</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二维码模态框 -->
+    <div id="qrcodeModal" class="modal">
+        <div class="modal-content qrcode-content">
+            <span class="close" onclick="closeModal('qrcodeModal')">&times;</span>
+            <h2>微信支付</h2>
+            <div class="qrcode-container">
+                <div class="qrcode-placeholder">
+                    <i class="fab fa-weixin"></i>
+                    <p>请使用微信扫描二维码完成支付</p>
+                    <div class="amount-display">支付金额：¥<span id="qrAmount"></span></div>
+                </div>
+                <div class="payment-actions">
+                    <button class="btn-secondary" onclick="openWeChatPay()">
+                        <i class="fab fa-weixin"></i>
+                        打开微信支付
+                    </button>
+                    <p class="payment-tip">点击上方按钮或扫描二维码完成支付</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

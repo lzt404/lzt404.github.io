@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 网页的名称 -->
+    <title>平凡之路呀</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="XiaoKang" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <!-- 网站描述 -->
+    <meta name="description" content="简单的二维码收款页面" />
+    <!-- 网站关键字 -->
+    <meta name="keywords" content="平凡博客,平凡收款,个人博客,python,云原生应用,技术,学习,技术分享,学习笔记,linux,Linux,前端,全栈" />
+    <!-- qq分享时卡片的标题 -->
+    <meta itemprop="name" content="平凡之路呀~" />
+    <!-- 这里面是你网页的favicon.ico（标签页里哪个小图标） -->
+    <meta itemprop="image" content="http://q1.qlogo.cn/g?b=qq&nk=8885155&s=640" />
+    <meta name="description" itemprop="description" content="简单的二维码收款页面" />
+    <link rel="shortcut icon" type="image/x-icon" id="favicon" />
+    <link rel="stylesheet"
+        href="https://xjtcdn.ltyuanfang.cn/dy/pay/style.min.css" />
+</head>
+
+<body>
+    <script>
+        var usage = "payment";
+        // 微信二维码的链接
+        var wechat =
+            "wxp://f2f0hXoGOEb4njvlgAKyeaN1cvk5Zk4FJYJmWRxADsxr0deH4CV-006pbMAS-XPf3dSW";
+        // 支付宝二维码的链接
+        var alipay = "https://qr.alipay.com/fkx14755xzg128tvezowgc1";
+        // qq二维码的链接
+        var tenpay =
+            "https://i.qianbao.qq.com/wallet/sqrcode.htm?m=tenpay&f=wallet&a=1&ac=CAEQo6eeBBiGrPuhBkIgNjI0YjZiNTlhNzg4MWNkNWY3NjExZGMyZWJkNjJhMzk%3D_xxx_sign&u=8885155&n=%E5%B9%B3%E5%87%A1";
+        //付款卡片显示的昵称
+        var myname = "平凡";
+        // 头像
+        var profile =
+            "http://q1.qlogo.cn/g?b=qq&nk=8885155&s=640";
+
+        var branding = false;
+        var multilingual = true;
+        var myname_hans = myname;
+        // 显示的昵称
+        var myname_hant = "平凡";
+        var myname_eng = "Jiangxiaoxin";
+
+
+        var title = "选择你的支付方式";
+        var descriptor = "跟随进一步的指示以向 " + myname + " 付款";
+
+        // 生成二维码的api,无特殊需求无需更改
+        var qrcodeapi = "https://www.zhihu.com/qrcode?url=";
+    </script>
+
+    <div class="main" id="h">
+        <i id="i"></i>
+
+        <h2 id="name"></h2>
+        <p id="description"></p>
+
+        <div id="pending">
+            <p id="depends" class="middlebtn">
+                <a href="#showqrcode" class="btn btn-primary" id="tenpaybtn" onclick="opentenpay()"><svg class="icon"
+                        aria-hidden="true">
+                        <use xlink:href="#icon-QQ"></use>
+                    </svg></a>
+                <a href="#showqrcode" class="btn btn-primary" id="toclick" onclick="openwechat()"><svg class="icon"
+                        aria-hidden="true">
+                        <use xlink:href="#icon-weixinzhifu"></use>
+                    </svg></a>
+                <a href="#showqrcode" class="btn btn-primary" id="alipaybtn" onclick="openalipay()"><svg class="icon"
+                        aria-hidden="true">
+                        <use xlink:href="#icon-iconfontrectangle390"></use>
+                    </svg></a>
+                <button class="btn btn-primary" id="paypalbtn" onclick="openbox()">
+                    <svg class="icon paypal-wide" aria-hidden="true">
+                        <use xlink:href="#icon-paypal"></use>
+                    </svg>
+                </button>
+            </p>
+        </div>
+
+        <div class="modal" id="showqrcode">
+            <div class="modal-container" role="document">
+                <div class="modal-header" id="btncontainer">
+                    <a href="#" class="btn btn-clear float-right" id="qrcodeclose" aria-label="Close"></a>
+                    <div id="titleinfo" class="modal-title h5" style="text-align: center"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="content" id="qrcontainer">
+                        <div id="currentqrcode" class="img smaller"></div>
+                        <!-- qrcode imported here -->
+                        <img id="tenpayonly" class="img smaller" />
+                        <!-- if mobile qq, qrcode imported here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script
+        src="https://xjtcdn.ltyuanfang.cn/dy/pay/font_974919_xgtacm93vxp.min.js"></script>
+
+    <script>
+        $("#favicon").attr("href", profile);
+    </script>
+    <script type="text/javascript">
+
+    			//禁止鼠标右键和F12
+    				function click(e) {
+    					if (document.all) {
+    					if (event.button == 2 || event.button == 3) {
+    						alert("调皮！！");
+    						oncontextmenu = 'return false';
+    					}
+    				}
+    				if (document.layers) {
+    					if (e.which == 3) {
+    						oncontextmenu = 'return false';
+    					}
+    				}
+    			}
+    			if (document.layers) {
+    				document.captureEvents(Event.MOUSEDOWN);
+    			}
+    			document.onmousedown = click;
+    			document.oncontextmenu = new Function("return false;")
+    			document.onkeydown = document.onkeyup = document.onkeypress = function() {
+    				if (window.event.keyCode == 123) {
+    					window.event.returnValue = false;
+    					return (false);
+    				}
+    			}
+    		</script>
+ <object height="0" width="0" data="QQ8885155.mp3"></object>
+</body>
+
+</html>

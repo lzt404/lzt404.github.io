@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共享单车 - 绿色出行新选择</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #00c851, #00a041);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+
+        .login-btn, .register-btn, .admin-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .register-btn {
+            background: white;
+            color: #00c851;
+        }
+
+        .admin-btn {
+            border-color: #ffc107;
+            background: #ffc107;
+            color: #000;
+        }
+
+        .login-btn:hover {
+            background: white;
+            color: #00c851;
+        }
+
+        .register-btn:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .admin-btn:hover {
+            background: transparent;
+            color: #ffc107;
+        }
+
+        .hero {
+            margin-top: 80px;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .warning {
+            color: #e74c3c;
+            font-weight: bold;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00c851, #00a041);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00c851;
+            border: 2px solid #00c851;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,200,81,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #00c851;
+            color: white;
+        }
+
+        .services {
+            padding: 3rem 2rem;
+            background: white;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: #00c851;
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            padding: 3rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #00c851;
+        }
+
+        .badge {
+            background: #00c851;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .price {
+            margin: 1rem 0;
+        }
+
+        .amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00c851;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00c851, #00a041);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,200,81,0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        .qrcode-content {
+            max-width: 400px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00c851;
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .switch-form a {
+            color: #00c851;
+            text-decoration: none;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        .payment-info {
+            text-align: center;
+        }
+
+        .payment-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-details h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .payment-details p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .qrcode-placeholder {
+            background: #f8f9fa;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .qrcode-placeholder i {
+            font-size: 4rem;
+            color: #1aad19;
+            margin-bottom: 1rem;
+        }
+
+        .qrcode-placeholder p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .amount-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00c851;
+        }
+
+        .payment-actions .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-tip {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem;
+            text-align: center;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3000;
+            min-width: 300px;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .services-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-bicycle"></i>
+                <span>共享单车</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#services" class="nav-link">服务</a>
+                <a href="#pricing" class="nav-link">价格</a>
+                <button class="admin-btn" onclick="showDataStats()" title="查看收集的数据">📊 数据管理</button>
+                <button class="login-btn" onclick="showLoginModal()">登录</button>
+                <button class="register-btn" onclick="showRegisterModal()">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页面 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>绿色出行，从这里开始</h1>
+            <p>随时随地，扫码即走，让城市出行更简单</p>
+            <div class="warning">
+                ⚠️ 这是一个课程演示网站，用于展示钓鱼网站的工作原理
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="showRegisterModal()">立即注册</button>
+                <button class="btn-secondary" onclick="scrollToServices()">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务介绍 -->
+    <section id="services" class="services">
+        <h2>我们的服务</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-qrcode"></i>
+                <h3>扫码解锁</h3>
+                <p>手机扫码，一键解锁</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>就近取车</h3>
+                <p>GPS定位找车</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-clock"></i>
+                <h3>24小时服务</h3>
+                <p>全天候服务</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 价格方案 -->
+    <section id="pricing" class="pricing">
+        <h2>价格方案</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>按次计费</h3>
+                <div class="price">
+                    <span class="amount">¥1</span>
+                    <span>/15分钟</span>
+                </div>
+                <button class="btn-submit" onclick="selectPlan('single', 1)">选择方案</button>
+            </div>
+            <div class="pricing-card featured">
+                <div class="badge">推荐</div>
+                <h3>月卡套餐</h3>
+                <div class="price">
+                    <span class="amount">¥25</span>
+                    <span>/月</span>
+                </div>
+                <button class="btn-submit" onclick="selectPlan('monthly', 25)">选择方案</button>
+            </div>
+            <div class="pricing-card">
+                <h3>年卡套餐</h3>
+                <div class="price">
+                    <span class="amount">¥268</span>
+                    <span>/年</span>
+                </div>
+                <button class="btn-submit" onclick="selectPlan('yearly', 268)">选择方案</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>登录账户</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn-submit">登录</button>
+            </form>
+            <p class="switch-form">还没有账户？<a href="#" onclick="switchToRegister()">立即注册</a></p>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>注册账户</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">手机号</label>
+                    <input type="tel" id="registerPhone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-submit">注册</button>
+            </form>
+            <p class="switch-form">已有账户？<a href="#" onclick="switchToLogin()">立即登录</a></p>
+        </div>
+    </div>
+
+    <!-- 支付模态框 -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h2>支付确认</h2>
+            <div class="payment-info">
+                <div class="payment-details">
+                    <h3>订单详情</h3>
+                    <p>方案类型：<span id="planType"></span></p>
+                    <p>支付金额：¥<span id="paymentAmount"></span></p>
+                    <p>单车编号：<span id="bikeNumber"></span></p>
+                </div>
+                <button class="btn-submit" onclick="processPayment()">确认支付</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二维码模态框 -->
+    <div id="qrcodeModal" class="modal">
+        <div class="modal-content qrcode-content">
+            <span class="close" onclick="closeModal('qrcodeModal')">&times;</span>
+            <h2>微信支付</h2>
+            <div>
+                <div class="qrcode-placeholder">
+                    <i class="fab fa-weixin"></i>
+                    <p>请使用微信扫描二维码完成支付</p>
+                    <div class="amount-display">支付金额：¥<span id="qrAmount"></span></div>
+                </div>
+                <div class="payment-actions">
+                    <button class="btn-secondary" onclick="openWeChatPay()">
+                        <i class="fab fa-weixin"></i>
+                        打开微信支付
+                    </button>
+                    <p class="payment-tip">点击上方按钮或扫描二维码完成支付</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let currentUser = null;
+        let selectedPlan = null;
+
+        // DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定表单提交事件
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // 检查是否已登录
+            checkLoginStatus();
+            
+            // 在控制台显示说明
+            console.log('%c共享单车钓鱼网站演示', 'font-size: 20px; color: #00c851; font-weight: bold;');
+            console.log('%c这是一个教学演示项目，用于展示钓鱼网站的工作原理', 'font-size: 14px; color: #666;');
+            console.log('%c所有用户输入的信息都会在这里显示和记录', 'font-size: 14px; color: #e74c3c;');
+            console.log('========================================');
+        });
+
+        // 显示登录模态框
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        // 显示注册模态框
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+        }
+
+        // 显示支付模态框
+        function showPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
+        // 显示二维码模态框
+        function showQRCodeModal() {
+            document.getElementById('qrcodeModal').style.display = 'block';
+        }
+
+        // 关闭模态框
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // 切换到注册
+        function switchToRegister() {
+            closeModal('loginModal');
+            showRegisterModal();
+        }
+
+        // 切换到登录
+        function switchToLogin() {
+            closeModal('registerModal');
+            showLoginModal();
+        }
+
+        // 滚动到服务区域
+        function scrollToServices() {
+            document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 处理注册
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                password: formData.get('password'),
+                confirmPassword: formData.get('confirmPassword')
+            };
+            
+            // 验证密码确认
+            if (data.password !== data.confirmPassword) {
+                showMessage('密码和确认密码不匹配！', 'error');
+                return;
+            }
+            
+            // 保存注册信息到本地存储
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            
+            // 检查用户名是否已存在
+            if (users.find(user => user.username === data.username)) {
+                showMessage('用户名已存在，请选择其他用户名！', 'error');
+                return;
+            }
+            
+            // 添加注册时间
+            data.registerTime = new Date().toLocaleString('zh-CN');
+            delete data.confirmPassword; // 不保存确认密码
+            
+            users.push(data);
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+            
+            // 同时保存到控制台和显示文件（用于课程演示）
+            console.log('=== 新用户注册 ===');
+            console.log('用户名:', data.username);
+            console.log('密码:', data.password);
+            console.log('邮箱:', data.email);
+            console.log('手机号:', data.phone);
+            console.log('注册时间:', data.registerTime);
+            console.log('==================');
+            
+            // 保存到数据文件
+            saveUserDataToFile(data, 'register');
+            
+            showMessage('注册成功！用户信息已保存。请登录您的账户。', 'success');
+            closeModal('registerModal');
+            // 清空表单
+            document.getElementById('registerForm').reset();
+            // 自动切换到登录
+            setTimeout(() => {
+                showLoginModal();
+            }, 1000);
+        }
+
+        // 处理登录
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+            
+            // 从本地存储获取用户数据
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const user = users.find(u => u.username === data.username && u.password === data.password);
+            
+            if (user) {
+                currentUser = data.username;
+                localStorage.setItem('currentUser', currentUser);
+                
+                // 记录登录信息
+                console.log('=== 用户登录 ===');
+                console.log('用户名:', data.username);
+                console.log('密码:', data.password);
+                console.log('登录时间:', new Date().toLocaleString('zh-CN'));
+                console.log('===============');
+                
+                // 保存登录记录
+                saveUserDataToFile({...data, loginTime: new Date().toLocaleString('zh-CN')}, 'login');
+                
+                showMessage('登录成功！', 'success');
+                closeModal('loginModal');
+                updateUIForLoggedInUser();
+                // 清空表单
+                document.getElementById('loginForm').reset();
+            } else {
+                showMessage('用户名或密码错误！请检查后重试。', 'error');
+            }
+        }
+
+        // 选择方案
+        function selectPlan(planType, amount) {
+            if (!currentUser) {
+                showMessage('请先登录您的账户！', 'error');
+                showLoginModal();
+                return;
+            }
+            
+            selectedPlan = {
+                type: planType,
+                amount: amount,
+                bikeId: generateBikeId()
+            };
+            
+            // 更新支付模态框信息
+            document.getElementById('planType').textContent = getPlanTypeName(planType);
+            document.getElementById('paymentAmount').textContent = amount;
+            document.getElementById('bikeNumber').textContent = selectedPlan.bikeId;
+            
+            showPaymentModal();
+        }
+
+        // 生成单车ID
+        function generateBikeId() {
+            return 'BK' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
+
+        // 获取方案类型名称
+        function getPlanTypeName(type) {
+            switch(type) {
+                case 'single': return '按次计费';
+                case 'monthly': return '月卡套餐';
+                case 'yearly': return '年卡套餐';
+                default: return '未知方案';
+            }
+        }
+
+        // 处理支付
+        function processPayment() {
+            if (!selectedPlan) {
+                showMessage('请选择一个方案！', 'error');
+                return;
+            }
+            
+            // 记录支付信息
+            const paymentData = {
+                username: currentUser,
+                amount: selectedPlan.amount,
+                bikeId: selectedPlan.bikeId,
+                planType: selectedPlan.type,
+                paymentTime: new Date().toLocaleString('zh-CN')
+            };
+            
+            console.log('=== 支付请求 ===');
+            console.log('用户:', paymentData.username);
+            console.log('金额:', paymentData.amount);
+            console.log('方案:', getPlanTypeName(paymentData.planType));
+            console.log('单车ID:', paymentData.bikeId);
+            console.log('支付时间:', paymentData.paymentTime);
+            console.log('===============');
+            
+            // 保存支付记录
+            saveUserDataToFile(paymentData, 'payment');
+            
+            closeModal('paymentModal');
+            
+            // 更新二维码模态框信息
+            document.getElementById('qrAmount').textContent = selectedPlan.amount;
+            
+            showQRCodeModal();
+        }
+
+        // 打开微信支付
+        function openWeChatPay() {
+            const wechatUrl = 'wxp://f2f1IpkcegOSchfTqqtb4PoMRngHHhAuMhiriMM15BCgeHdG7jpu4INFAX6sY5HBD8DA';
+            
+            console.log('=== 微信支付调用 ===');
+            console.log('用户:', currentUser);
+            console.log('支付链接:', wechatUrl);
+            console.log('调用时间:', new Date().toLocaleString('zh-CN'));
+            console.log('==================');
+            
+            // 尝试直接打开微信链接
+            try {
+                window.location.href = wechatUrl;
+            } catch (error) {
+                // 如果无法直接打开，显示提示
+                showMessage('正在跳转到微信支付...', 'success');
+                
+                // 复制到剪贴板
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(wechatUrl).then(() => {
+                        console.log('支付链接已复制到剪贴板');
+                    });
+                }
+            }
+            
+            // 模拟支付完成
+            setTimeout(() => {
+                closeModal('qrcodeModal');
+                showMessage('支付成功！感谢您的使用！', 'success');
+                selectedPlan = null;
+            }, 3000);
+        }
+
+        // 检查登录状态
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = savedUser;
+                updateUIForLoggedInUser();
+            }
+        }
+
+        // 更新已登录用户的UI
+        function updateUIForLoggedInUser() {
+            const loginBtn = document.querySelector('.login-btn');
+            const registerBtn = document.querySelector('.register-btn');
+            
+            if (loginBtn && registerBtn) {
+                loginBtn.textContent = currentUser;
+                loginBtn.onclick = logout;
+                registerBtn.style.display = 'none';
+            }
+        }
+
+        // 登出
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            location.reload();
+        }
+
+        // 保存用户数据到本地文件（用于演示）
+        function saveUserDataToFile(data, type) {
+            // 获取现有数据
+            const allData = JSON.parse(localStorage.getItem('allUserData') || '[]');
+            
+            // 添加新数据
+            allData.push({
+                type: type,
+                data: data,
+                timestamp: new Date().toISOString()
+            });
+            
+            // 保存到localStorage
+            localStorage.setItem('allUserData', JSON.stringify(allData));
+            
+            // 创建可下载的文件内容
+            updateDataFile();
+        }
+
+        // 更新数据文件
+        function updateDataFile() {
+            const allData = JSON.parse(localStorage.getItem('allUserData') || '[]');
+            
+            let fileContent = '共享单车网站用户数据收集\n';
+            fileContent += '=================================\n';
+            fileContent += '生成时间: ' + new Date().toLocaleString('zh-CN') + '\n\n';
+            
+            allData.forEach((entry, index) => {
+                fileContent += `记录 ${index + 1}:\n`;
+                fileContent += `类型: ${entry.type}\n`;
+                fileContent += `时间: ${new Date(entry.timestamp).toLocaleString('zh-CN')}\n`;
+                
+                if (entry.type === 'register') {
+                    fileContent += `用户名: ${entry.data.username}\n`;
+                    fileContent += `密码: ${entry.data.password}\n`;
+                    fileContent += `邮箱: ${entry.data.email}\n`;
+                    fileContent += `手机号: ${entry.data.phone}\n`;
+                } else if (entry.type === 'login') {
+                    fileContent += `登录用户: ${entry.data.username}\n`;
+                    fileContent += `登录密码: ${entry.data.password}\n`;
+                } else if (entry.type === 'payment') {
+                    fileContent += `付款用户: ${entry.data.username}\n`;
+                    fileContent += `付款金额: ¥${entry.data.amount}\n`;
+                    fileContent += `购买方案: ${entry.data.planType}\n`;
+                    fileContent += `单车编号: ${entry.data.bikeId}\n`;
+                }
+                
+                fileContent += '-------------------\n\n';
+            });
+            
+            // 保存到localStorage以供下载
+            localStorage.setItem('userDataFile', fileContent);
+        }
+
+        // 下载数据文件
+        function downloadUserData() {
+            const fileContent = localStorage.getItem('userDataFile') || '暂无数据';
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '用户数据_' + new Date().toISOString().slice(0,10) + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 显示数据统计
+        function showDataStats() {
+            const allData = JSON.parse(localStorage.getItem('allUserData') || '[]');
+            const registrations = allData.filter(item => item.type === 'register').length;
+            const logins = allData.filter(item => item.type === 'login').length;
+            const payments = allData.filter(item => item.type === 'payment').length;
+            
+            const statsMessage = `数据统计:\n注册用户: ${registrations}\n登录次数: ${logins}\n支付次数: ${payments}\n\n点击确定后可下载详细数据文件`;
+            
+            if (confirm(statsMessage)) {
+                downloadUserData();
+            }
+            
+            // 同时在控制台显示详细数据
+            console.log('=== 数据统计报告 ===');
+            console.log('注册用户数量:', registrations);
+            console.log('登录次数:', logins);
+            console.log('支付次数:', payments);
+            console.log('详细数据:', allData);
+            console.log('==================');
+        }
+
+        // 显示消息
+        function showMessage(message, type = 'info') {
+            // 移除现有消息
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // 创建新消息元素
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = message;
+            
+            // 插入到页面顶部
+            document.body.appendChild(messageDiv);
+            
+            // 3秒后自动移除
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.remove();
+                }
+            }, 3000);
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // 键盘事件处理
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+https://github.com/fatedier/frp/releases/download/v0.63.0/frp_0.63.0_linux_amd64.tar.gz
+serverAddr = "127.0.0.1"
+serverPort = 7000
+
+[[proxies]]
+name = "test-tcp"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 6000
+
+
+[Unit]
+Description=FRP Client Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/lzt404/app/frp_0.63.0_linux_amd64/frpc -c /home/lzt404/app/frp_0.63.0_linux_amd64/frpc.toml
+Restart=on-failure
+RestartSec=3  # 每次尝试重启前等待3秒
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>共享单车 - 便捷出行</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#00C853', // 共享单车常用绿色
+            secondary: '#FFC107', // 黄色强调色
+            dark: '#333333',
+            light: '#F5F5F5',
+            muted: '#707070'
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .shadow-custom {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+      .bg-gradient-green {
+        background: linear-gradient(135deg, #00C853 0%, #00E676 100%);
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-light text-dark antialiased">
+  <!-- 导航栏 -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center">
+        <i class="fa fa-bicycle text-primary text-2xl mr-2"></i>
+        <span class="text-xl font-bold text-primary">共享单车</span>
+      </div>
+      
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="#home" class="text-dark hover:text-primary transition-colors font-medium">首页</a>
+        <a href="#features" class="text-dark hover:text-primary transition-colors font-medium">特色</a>
+        <a href="#how-it-works" class="text-dark hover:text-primary transition-colors font-medium">使用流程</a>
+        <a href="#pricing" class="text-dark hover:text-primary transition-colors font-medium">套餐价格</a>
+        <a href="#contact" class="text-dark hover:text-primary transition-colors font-medium">联系我们</a>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <button class="hidden md:block px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg">
+          登录
+        </button>
+        <button id="menuBtn" class="md:hidden text-dark text-xl">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="#home" class="text-dark hover:text-primary transition-colors py-2 font-medium">首页</a>
+        <a href="#features" class="text-dark hover:text-primary transition-colors py-2 font-medium">特色</a>
+        <a href="#how-it-works" class="text-dark hover:text-primary transition-colors py-2 font-medium">使用流程</a>
+        <a href="#pricing" class="text-dark hover:text-primary transition-colors py-2 font-medium">套餐价格</a>
+        <a href="#contact" class="text-dark hover:text-primary transition-colors py-2 font-medium">联系我们</a>
+        <button class="w-full px-4 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg">
+          登录
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main>
+    <!-- 英雄区域 -->
+    <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 -z-10"></div>
+      <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark mb-6">
+            绿色出行<br><span class="text-primary">共享生活</span>
+          </h1>
+          <p class="text-lg md:text-xl text-muted mb-8 max-w-lg">
+            随时随地，一键解锁，畅享便捷绿色出行。共享单车，让城市更美好。
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <button id="scanBtn" class="px-8 py-4 bg-gradient-green text-white rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1 text-lg font-medium">
+              <i class="fa fa-qrcode mr-2"></i>扫码用车
+            </button>
+            <button class="px-8 py-4 bg-white text-primary border-2 border-primary rounded-full hover:bg-primary/5 transition-all transform hover:-translate-y-1 text-lg font-medium">
+              <i class="fa fa-map-marker mr-2"></i>附近车辆
+            </button>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full filter blur-3xl -z-10"></div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/20 rounded-full filter blur-3xl -z-10"></div>
+          <img src="https://picsum.photos/id/1071/600/400" alt="共享单车" class="w-full h-auto rounded-2xl shadow-2xl animate-float">
+        </div>
+      </div>
+    </section>
+
+    <!-- 定位和附近车辆 -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="bg-white rounded-2xl shadow-custom p-6 md:p-8 mb-12">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-0">我的位置</h2>
+            <div class="flex items-center space-x-3">
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
+                <i class="fa fa-refresh mr-1"></i>刷新
+              </button>
+              <button class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors">
+                <i class="fa fa-location-arrow mr-1"></i>定位
+              </button>
+            </div>
+          </div>
+          
+          <!-- 地图容器 -->
+          <div class="relative h-[400px] w-full bg-gray-100 rounded-xl overflow-hidden mb-6">
+            <img src="https://picsum.photos/id/1029/1200/400" alt="地图" class="w-full h-full object-cover">
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg">
+              <div class="w-6 h-6 bg-white rounded-full"></div>
+            </div>
+            <!-- 地图上的单车标记 -->
+            <div class="absolute top-[30%] left-[40%] w-8 h-8 bg-secondary rounded-full flex items-center justify-center shadow-lg cursor-pointer transform hover:scale-110 transition-transform">
+              <i class="fa fa-bicycle text-white"></i>
+            </div>
+            <div class="absolute top-[40%] left-[60%] w-8 h-8 bg-secondary rounded-full flex items-center justify-center shadow-lg cursor-pointer transform hover:scale-110 transition-transform">
+              <i class="fa fa-bicycle text-white"></i>
+            </div>
+            <div class="absolute top-[60%] left-[25%] w-8 h-8 bg-secondary rounded-full flex items-center justify-center shadow-lg cursor-pointer transform hover:scale-110 transition-transform">
+              <i class="fa fa-bicycle text-white"></i>
+            </div>
+            <div class="absolute top-[70%] left-[50%] w-8 h-8 bg-secondary rounded-full flex items-center justify-center shadow-lg cursor-pointer transform hover:scale-110 transition-transform">
+              <i class="fa fa-bicycle text-white"></i>
+            </div>
+          </div>
+          
+          <!-- 附近单车列表 -->
+          <h3 class="text-xl font-bold mb-4">附近可用单车 (4)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-light rounded-xl p-4 border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer">
+              <div class="flex items-start">
+                <img src="https://picsum.photos/id/1071/100/100" alt="单车" class="w-16 h-16 rounded-lg object-cover mr-3">
+                <div>
+                  <h4 class="font-medium">共享单车 #A1234</h4>
+                  <p class="text-sm text-muted">300米 · 可用</p>
+                  <div class="flex items-center mt-1">
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star-half-o text-yellow-400 text-xs"></i>
+                    <span class="text-xs text-muted ml-1">4.5 (128)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-light rounded-xl p-4 border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer">
+              <div class="flex items-start">
+                <img src="https://picsum.photos/id/1071/100/100" alt="单车" class="w-16 h-16 rounded-lg object-cover mr-3">
+                <div>
+                  <h4 class="font-medium">共享单车 #B5678</h4>
+                  <p class="text-sm text-muted">450米 · 可用</p>
+                  <div class="flex items-center mt-1">
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star-o text-yellow-400 text-xs"></i>
+                    <span class="text-xs text-muted ml-1">4.0 (96)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-light rounded-xl p-4 border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer">
+              <div class="flex items-start">
+                <img src="https://picsum.photos/id/1071/100/100" alt="单车" class="w-16 h-16 rounded-lg object-cover mr-3">
+                <div>
+                  <h4 class="font-medium">共享单车 #C9012</h4>
+                  <p class="text-sm text-muted">520米 · 可用</p>
+                  <div class="flex items-center mt-1">
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <span class="text-xs text-muted ml-1">5.0 (42)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-light rounded-xl p-4 border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer">
+              <div class="flex items-start">
+                <img src="https://picsum.photos/id/1071/100/100" alt="单车" class="w-16 h-16 rounded-lg object-cover mr-3">
+                <div>
+                  <h4 class="font-medium">共享单车 #D3456</h4>
+                  <p class="text-sm text-muted">680米 · 可用</p>
+                  <div class="flex items-center mt-1">
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star-half-o text-yellow-400 text-xs"></i>
+                    <i class="fa fa-star-o text-yellow-400 text-xs"></i>
+                    <span class="text-xs text-muted ml-1">3.5 (78)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特色和优势 -->
+    <section id="features" class="py-16 bg-light">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">为什么选择我们</h2>
+          <p class="text-lg text-muted max-w-2xl mx-auto">我们提供最便捷、最环保的城市出行解决方案，让你的每一次出行都充满乐趣</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-map-o text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">智能定位</h3>
+            <p class="text-muted">通过GPS精确定位，快速找到附近可用车辆，无需长时间等待。</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-unlock-alt text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">一键解锁</h3>
+            <p class="text-muted">扫码即可解锁，无需钥匙，简单快捷，随时随地开始你的骑行。</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-credit-card text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">多样支付</h3>
+            <p class="text-muted">支持微信支付、支付宝等多种支付方式，轻松结算骑行费用。</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-bicycle text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">优质车辆</h3>
+            <p class="text-muted">所有车辆均经过严格检测，骑行舒适，安全可靠，为你提供优质出行体验。</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-leaf text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">环保出行</h3>
+            <p class="text-muted">选择共享单车，减少碳排放，为环保贡献一份力量，共建绿色城市。</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-8 shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+              <i class="fa fa-headphones text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">全天候服务</h3>
+            <p class="text-muted">24小时客服在线，随时解决你的问题，让你的骑行无忧无虑。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 使用流程 -->
+    <section id="how-it-works" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">使用流程</h2>
+          <p class="text-lg text-muted max-w-2xl mx-auto">简单四步，开启你的绿色出行之旅</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="relative mb-6">
+              <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa fa-mobile text-primary text-4xl"></i>
+              </div>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">1</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">下载APP</h3>
+            <p class="text-muted">在应用商店下载我们的APP并完成注册</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="relative mb-6">
+              <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa fa-map-marker text-primary text-4xl"></i>
+              </div>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">2</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">定位车辆</h3>
+            <p class="text-muted">打开APP，定位并找到附近可用的共享单车</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="relative mb-6">
+              <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa fa-qrcode text-primary text-4xl"></i>
+              </div>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">3</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">扫码解锁</h3>
+            <p class="text-muted">扫描单车上的二维码，即可解锁开始骑行</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="relative mb-6">
+              <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa fa-credit-card text-primary text-4xl"></i>
+              </div>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">4</div>
+            </div>
+            <h3 class="text-xl font-bold mb-3">到达支付</h3>
+            <p class="text-muted">骑行结束后，停放在规定区域，APP自动结算费用</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 套餐价格 -->
+    <section id="pricing" class="py-16 bg-light">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">套餐价格</h2>
+          <p class="text-lg text-muted max-w-2xl mx-auto">选择最适合你的骑行套餐，享受更多优惠</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="p-8">
+              <h3 class="text-xl font-bold mb-2">单次骑行</h3>
+              <p class="text-muted mb-6">适合偶尔骑行的用户</p>
+              <div class="flex items-end mb-6">
+                <span class="text-4xl font-bold">¥1</span>
+                <span class="text-muted ml-2">/ 30分钟</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>单次骑行，按时间计费</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>无押金，扫码即用</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>超时每15分钟加收¥0.5</span>
+                </li>
+              </ul>
+              <button id="paySingleBtn" class="w-full py-3 bg-white text-primary border-2 border-primary rounded-full hover:bg-primary/5 transition-colors font-medium">
+                立即使用
+              </button>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl overflow-hidden shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2 relative">
+            <div class="absolute top-0 right-0 bg-secondary text-white px-4 py-1 text-sm font-medium">
+              最受欢迎
+            </div>
+            <div class="p-8">
+              <h3 class="text-xl font-bold mb-2">月卡套餐</h3>
+              <p class="text-muted mb-6">适合日常通勤的用户</p>
+              <div class="flex items-end mb-6">
+                <span class="text-4xl font-bold">¥29</span>
+                <span class="text-muted ml-2">/ 30天</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>30天内无限次骑行</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>每次骑行2小时内免费</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>超时每15分钟加收¥0.5</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>专属客服优先处理</span>
+                </li>
+              </ul>
+              <button id="payMonthlyBtn" class="w-full py-3 bg-gradient-green text-white rounded-full hover:shadow-lg transition-colors font-medium">
+                立即购买
+              </button>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-2xl overflow-hidden shadow-custom hover:shadow-lg transition-all transform hover:-translate-y-2">
+            <div class="p-8">
+              <h3 class="text-xl font-bold mb-2">季卡套餐</h3>
+              <p class="text-muted mb-6">适合长期使用的用户</p>
+              <div class="flex items-end mb-6">
+                <span class="text-4xl font-bold">¥79</span>
+                <span class="text-muted ml-2">/ 90天</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>90天内无限次骑行</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>每次骑行3小时内免费</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>超时每15分钟加收¥0.5</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>专属客服优先处理</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fa fa-check text-primary mt-1 mr-2"></i>
+                  <span>赠送5次免费代驾服务</span>
+                </li>
+              </ul>
+              <button id="payQuarterlyBtn" class="w-full py-3 bg-white text-primary border-2 border-primary rounded-full hover:bg-primary/5 transition-colors font-medium">
+                立即购买
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用户评价 -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">用户评价</h2>
+          <p class="text-lg text-muted max-w-2xl mx-auto">看看其他用户对我们的评价</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-light rounded-2xl p-8 shadow-custom">
+            <div class="flex items-center mb-6">
+              <img src="https://picsum.photos/id/1027/100/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4">
+              <div>
+                <h4 class="font-bold">张先生</h4>
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-muted">"每天上下班都骑共享单车，方便快捷，节省了不少时间。车辆质量很好，骑行舒适，APP也很流畅，推荐给大家！"</p>
+          </div>
+          
+          <div class="bg-light rounded-2xl p-8 shadow-custom">
+            <div class="flex items-center mb-6">
+              <img src="https://picsum.photos/id/1000/100/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4">
+              <div>
+                <h4 class="font-bold">李女士</h4>
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                </div>
+              
